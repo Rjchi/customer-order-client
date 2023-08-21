@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useOrders } from "../context/PedidoCotext";
 
-function PedidoForm({ socket }) {
+function PedidoForm() {
+  const { socket } = useOrders();
+
   const [producto, setProducto] = useState({
     nombre: "",
     cantidad: "",
@@ -30,7 +33,7 @@ function PedidoForm({ socket }) {
 
   return (
     <div>
-        <h1>Cliente</h1>
+      <h1>Cliente</h1>
       <form onSubmit={handleSubmit}>
         <input
           name="nombre"

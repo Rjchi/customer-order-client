@@ -1,7 +1,10 @@
+import { useOrders } from "../context/PedidoCotext";
 import { useEffect, useState } from "react";
 
-const Cocina = ({socket}) => {
+const Cocina = () => {
+  const { socket } = useOrders();
   const [pedidos, setPedidos] = useState([]);
+
   useEffect(() => {
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
@@ -18,7 +21,7 @@ const Cocina = ({socket}) => {
   }, [pedidos, socket]);
   console.log(pedidos);
   return (
-    <div className="cocina">
+    <div>
       <h2>Pedidos en Cocina</h2>
       <ul>
         {pedidos.map((pedido, index) => (

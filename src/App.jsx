@@ -1,21 +1,27 @@
 import "./App.css";
-import io from "socket.io-client";
 import { Route, Routes } from "react-router-dom";
 
 import PedidoForm from "./pages/PedidoForm";
 import Cocina from "./pages/Cocina";
-import { PedidoContextProvider } from "./context/PedidoCotext";
+import { NotFound } from "./pages/NotFound";
 
-const socket = io("http://localhost:5000");
+import { PedidoContextProvider } from "./context/PedidoCotext";
+import { MenuContent } from "./components/MenuContent";
+import { CategoryContent } from "./components/CategoryContent";
+
 
 function App() {
   return (
-    <div>
+    <div className="container mx-auto p-4 h-full w-full">
       <PedidoContextProvider>
         <Routes>
-          <Route path="/" element={<PedidoForm socket={socket} />} />
-          <Route path="/cocina" element={<Cocina socket={socket} />} />
-          {/* <Route path="*" element={<NotFound />} /> */}
+          <Route path="/" element={<PedidoForm />} />
+          <Route path="/cocina" element={<Cocina />} />
+
+          <Route path="/example" element={<MenuContent />} />
+          <Route path="/example2" element={<CategoryContent />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </PedidoContextProvider>
     </div>
