@@ -6,7 +6,6 @@ import Cocina from "./pages/Cocina";
 import { NotFound } from "./pages/NotFound";
 
 import { PedidoContextProvider } from "./context/PedidoCotext";
-import { MenuContent } from "./components/MenuContent";
 import { CategoryContent } from "./components/CategoryContent";
 
 
@@ -18,7 +17,6 @@ function App() {
           <Route path="/" element={<PedidoForm />} />
           <Route path="/cocina" element={<Cocina />} />
 
-          <Route path="/example" element={<MenuContent />} />
           <Route path="/example2" element={<CategoryContent />} />
 
           <Route path="*" element={<NotFound />} />
