@@ -16,3 +16,6 @@ export const getProductsRequest = async () =>
 
 export const createOrderRequest = async (order) =>
   await axios.post(`${API}/api/create-order`, order);
+
+export const getOrderByTableRequest = async (table) =>
+  await axios.get(`${API}/api/get-order-by-table?mesa=${table}`);

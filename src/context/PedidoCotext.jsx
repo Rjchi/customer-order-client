@@ -3,6 +3,7 @@ import {
   createOrderRequest,
   getProductsRequest,
   getCategoriesRequest,
+  getOrderByTableRequest,
 } from "../api/pedidos.api";
 import { createContext, useContext, useState } from "react";
 
@@ -54,9 +55,22 @@ export const PedidoContextProvider = ({ children }) => {
     }
   };
 
+  const getOrdersByTable = async (table) => {
+    try {
+      const response = await getOrderByTableRequest(table);
+      if (response.status === 200) {
+        return response.data;
+      }
+      return "error";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const createOrder = async (order) => {
     try {
-      await createOrderRequest(order);
+      const response = await createOrderRequest(order);
+      return response.status;
     } catch (error) {
       console.log(error);
     }
@@ -71,6 +85,7 @@ export const PedidoContextProvider = ({ children }) => {
         getProducts,
         getCategories,
         getProByCate,
+        getOrdersByTable,
       }}
     >
       {children}

@@ -1,9 +1,12 @@
 import { useState } from "react";
-// import { useOrders } from "../context/PedidoCotext";
+import { useNavigate } from "react-router-dom";
+import { useOrders } from "../context/PedidoCotext";
 
 export const ProductoCard = ({ product }) => {
   const [open, setOpen] = useState(false);
-  // const { socket } = useOrders();
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+  const { socket, createOrder } = useOrders();
 
   const [producto, setProducto] = useState({
     nombre: "",
@@ -22,19 +25,76 @@ export const ProductoCard = ({ product }) => {
       precio: product.precio_producto,
     });
 
-  const handleSubmit = (e) => {
+  const handleClick = (operator, value, name) => {
+    try {
+      console.log(value, name, isNaN(value));
+      if (isNaN(value)) {
+        navigate(0);
+      } else {
+        if (name === "cantidad" && operator === "+") {
+          setProducto({
+            ...producto,
+            nombre: product.nombre_producto,
+            precio: product.precio_producto,
+            cantidad: (value += 1),
+          });
+        } else if (name === "mesa" && operator === "+") {
+          setProducto({
+            ...producto,
+            nombre: product.nombre_producto,
+            precio: product.precio_producto,
+            mesa: (value += 1),
+          });
+        } else if (name === "cantidad" && operator === "-") {
+          setProducto({
+            ...producto,
+            nombre: product.nombre_producto,
+            precio: product.precio_producto,
+            cantidad: (value -= 1),
+          });
+        } else if (name === "mesa" && operator === "-") {
+          setProducto({
+            ...producto,
+            nombre: product.nombre_producto,
+            precio: product.precio_producto,
+            mesa: (value -= 1),
+          });
+        }
+      }
+    } catch (error) {
+      console.log(`Detalles: ${error.message}`);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (producto) {
-    //   socket.emit("nuevoPedido", producto);
-    //   setProducto({
-    //     nombre: "",
-    //     cantidad: "",
-    //     mesa: "",
-    //     precio: "",
-    //   });
-    // }
-    console.log(producto);
-    setOpen(false);
+    if (producto.cantidad.length === 0 || producto.mesa.length === 0) {
+      setErr(true);
+      setTimeout(() => {
+        setErr(false);
+      }, 2000);
+    } else if (
+      parseInt(producto.cantidad) === 0 ||
+      parseInt(producto.mesa) === 0
+    ) {
+      setErr(true);
+      setTimeout(() => {
+        setErr(false);
+      }, 2000);
+    } else {
+      const response = await createOrder(producto);
+      if (response === 204) {
+        socket.emit("nuevoPedido", producto);
+        setProducto({
+          nombre: "",
+          cantidad: "",
+          mesa: "",
+          precio: "",
+        });
+        console.log(producto);
+        setOpen(false);
+      }
+    }
   };
 
   return (
@@ -50,33 +110,104 @@ export const ProductoCard = ({ product }) => {
               onSubmit={handleSubmit}
             >
               <div className="grid grid-cols-3 items-center justify-around w-full h-44 bg-slate-200">
-                <div className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black ">—</div>
+                <div
+                  className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black "
+                  onClick={() => {
+                    try {
+                      handleClick(
+                        "-",
+                        parseInt(cantidad.length === 0 ? "0" : cantidad),
+                        "cantidad"
+                      );
+                    } catch (error) {
+                      console.log(`Error: ${error.message}`);
+                    }
+                  }}
+                >
+                  —
+                </div>
                 <input
                   name="cantidad"
-                  type="number"
+                  type={`number`}
                   autoFocus
+                  id="cantidad"
                   value={cantidad}
                   onChange={(e) => onChange(e)}
                   placeholder="cantidad"
-                  className="outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10"
+                  className={`${
+                    err
+                      ? "transition ease-linear border border-red-600 bg-red-300 "
+                      : ""
+                  }outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10`}
                 />
-                <div className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black ">✚</div>
-                <div className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black">—</div>
+                <div
+                  className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black "
+                  onClick={() => {
+                    try {
+                      handleClick(
+                        "+",
+                        parseInt(cantidad.length === 0 ? "0" : cantidad),
+                        "cantidad"
+                      );
+                    } catch (error) {
+                      console.log(`Error: ${error.message}`);
+                    }
+                  }}
+                >
+                  ✚
+                </div>
+                <div
+                  className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black"
+                  onClick={() => {
+                    try {
+                      handleClick(
+                        "-",
+                        parseInt(mesa.length === 0 ? "0" : mesa),
+                        "mesa"
+                      );
+                    } catch (error) {
+                      console.log(`Error: ${error.message}`);
+                    }
+                  }}
+                >
+                  —
+                </div>
 
                 <input
                   name="mesa"
+                  id="mesa"
                   type="number"
                   value={mesa}
                   onChange={(e) => onChange(e)}
                   placeholder="mesa"
-                  className="outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10"
+                  className={`${
+                    err
+                      ? "transition ease-linear border border-red-600 bg-red-300 "
+                      : ""
+                  } outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10`}
                 />
-                <div className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black">✚</div>
+                <div
+                  className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black"
+                  onClick={() => {
+                    try {
+                      handleClick(
+                        "+",
+                        parseInt(mesa.length === 0 ? "0" : mesa),
+                        "mesa"
+                      );
+                    } catch (error) {
+                      console.log(`Error: ${error.message}`);
+                    }
+                  }}
+                >
+                  ✚
+                </div>
               </div>
               <div className=" w-full h-16 flex flex-row items-center justify-around bg-slate-600">
-
-              <button className="" type="submit">Hacer Pedido</button>
-              <div className="cursor-pointer">Cancelar</div>
+                <button className="" type="submit">
+                  Hacer Pedido
+                </button>
+                <div className="cursor-pointer">Cancelar</div>
               </div>
             </form>
           </div>
