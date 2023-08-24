@@ -10,7 +10,9 @@ export const CategoryContent = () => {
   useEffect(() => {
     const loadProducts = async () => {
       const response = await getProducts();
-      setProducts(response);
+      if (response !== undefined) {
+        setProducts(response);
+      }
     };
 
     loadProducts();

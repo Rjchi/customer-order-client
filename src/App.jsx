@@ -9,7 +9,7 @@ import { CategoryContent } from "./components/CategoryContent";
 
 function App() {
   return (
-    <div className="container mx-auto p-4 h-full w-full">
+    <div className="container mx-auto p-4 h-screen w-full">
       <PedidoContextProvider>
         <Routes>
           <Route path="/" element={<CategoryContent />} />

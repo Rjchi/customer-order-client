@@ -4,9 +4,6 @@ const API = import.meta.env.VITE_API_URL;
 
 // -----Categorias-----
 
-export const getCategoriesRequest = async () =>
-  await axios.get(`${API}/api/get-categories`);
-
 // -----Productos con categoria-----
 
 export const getProductsRequest = async () =>
@@ -17,5 +14,8 @@ export const getProductsRequest = async () =>
 export const createOrderRequest = async (order) =>
   await axios.post(`${API}/api/create-order`, order);
 
-export const getOrderByTableRequest = async (table) =>
-  await axios.get(`${API}/api/get-order-by-table?mesa=${table}`);
+export const getOrdersRequest = async () =>
+  await axios.get(`${API}/api/get-orders`)
+
+export const deleteOrdersRequest = async () =>
+  await axios.delete(`${API}/api/delete-orders`)

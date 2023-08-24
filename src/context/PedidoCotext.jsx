@@ -2,18 +2,16 @@ import io from "socket.io-client";
 import {
   createOrderRequest,
   getProductsRequest,
-  getCategoriesRequest,
-  getOrderByTableRequest,
+  getOrdersRequest,
+  deleteOrdersRequest,
 } from "../api/pedidos.api";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
 export const PedidoContext = createContext();
 
 export const PedidoContextProvider = ({ children }) => {
   const API = import.meta.env.VITE_API_URL;
   const socket = io(`${API}`);
-
-  const [pedidos, setPedidos] = useState([]);
 
   const getProByCate = (products) => {
     const productsByCategory = products.reduce((acc, product) => {
@@ -31,15 +29,41 @@ export const PedidoContextProvider = ({ children }) => {
     return productsByCategory;
   };
 
+  const getOrderByTable = (orders) => {
+    const ordersByTable = orders.reduce((acc, order) => {
+      const { mesa } = order;
+
+      if (!acc[mesa]) {
+        acc[mesa] = { mesa, pedidos: [] };
+      }
+
+      acc[mesa].pedidos.push(order);
+
+      return acc;
+    }, {});
+
+    return ordersByTable;
+  };
+
   const getProducts = async () => {
     try {
       const response = await getProductsRequest();
-      if (response.status === 200) {
+      if (response.status !== 204) {
         return response.data;
       }
-      return "error";
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getOrders = async () => {
+    try {
+      const response = await getOrdersRequest();
+      if (response.status !== 204) {
+        return response.data
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 
@@ -76,16 +100,27 @@ export const PedidoContextProvider = ({ children }) => {
     }
   };
 
+  const deleteOrders = async () => {
+    try {
+      const response = await deleteOrdersRequest();
+      return response.status;
+    } catch (error) {
+      console.log(`Error al eliminar pedidos detalles: ${error.message}`)
+    }
+  }
+
   return (
     <PedidoContext.Provider
       value={{
         socket,
-        pedidos,
         createOrder,
         getProducts,
         getCategories,
         getProByCate,
         getOrdersByTable,
+        getOrders,
+        getOrderByTable,
+        deleteOrders,
       }}
     >
       {children}
