@@ -4,6 +4,7 @@ import {
   getProductsRequest,
   getOrdersRequest,
   deleteOrdersRequest,
+  deleteOrderRequest,
 } from "../api/pedidos.api";
 import { createContext, useContext } from "react";
 
@@ -59,9 +60,7 @@ export const PedidoContextProvider = ({ children }) => {
   const getOrders = async () => {
     try {
       const response = await getOrdersRequest();
-      if (response.status !== 204) {
-        return response.data
-      }
+      return response.data
     } catch (error) {
       console.log(error.message);
     }
@@ -109,6 +108,15 @@ export const PedidoContextProvider = ({ children }) => {
     }
   }
 
+  const deleteOrder = async (id) => {
+    try {
+      const response = await deleteOrderRequest(id);
+      return response.status;
+    } catch (error) {
+      console.log(`Error al eliminar pedido detalles: ${error.message}`)
+    }
+  }
+
   return (
     <PedidoContext.Provider
       value={{
@@ -121,6 +129,7 @@ export const PedidoContextProvider = ({ children }) => {
         getOrders,
         getOrderByTable,
         deleteOrders,
+        deleteOrder,
       }}
     >
       {children}

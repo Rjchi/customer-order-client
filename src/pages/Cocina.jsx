@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
-
   const { socket, getOrders, getOrderByTable, deleteOrders } = useOrders();
 
   useEffect(() => {
@@ -13,7 +12,7 @@ const Cocina = () => {
 
     const loadOrders = async () => {
       const response = await getOrders();
-      if (response !== undefined) {
+      if (response.length !== 0) {
         setPedidos(response);
       }
     };
@@ -32,6 +31,13 @@ const Cocina = () => {
       socket.off("nuevoPedidoCocina");
     };
   }, [pedidos, socket, getOrders]);
+
+  const DeleteOders = async () => {
+    const res = await deleteOrders();
+    if (res === 200 || res === 204) {
+      setPedidos([])
+    }
+  }
 
   if (pedidos.length === 0) {
     return (
@@ -52,13 +58,15 @@ const Cocina = () => {
             ))}
           </ul>
         </div>
-        <button className="bg-purple-900 h-auto w-full rounded-lg text-2xl font-bold text-white shadow-xl shadow-black">
+        <button
+        className="bg-purple-900 h-12 w-full rounded-lg text-2xl font-bold text-white shadow-xl shadow-black"
+        onClick={() => DeleteOders()}
+        >
           Limpiar Todo
         </button>
       </div>
     );
   }
 };
-// HACER LA FUNCIONALIDAD DE LOS BOTONES DE ELIMINACION DE PEDIDOS
 
 export default Cocina;

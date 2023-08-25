@@ -19,3 +19,6 @@ export const getOrdersRequest = async () =>
 
 export const deleteOrdersRequest = async () =>
   await axios.delete(`${API}/api/delete-orders`)
+
+export const deleteOrderRequest = async (id) =>
+  await axios.delete(`${API}/api/delete-order/${id}`)

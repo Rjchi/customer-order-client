@@ -84,7 +84,7 @@ export const ProductoCard = ({ product }) => {
     } else {
       const response = await createOrder(producto);
       if (response === 204) {
-        socket.emit("nuevoPedido", producto);
+        socket.emit("nuevoPedido");
         setProducto({
           nombre: "",
           cantidad: "",
