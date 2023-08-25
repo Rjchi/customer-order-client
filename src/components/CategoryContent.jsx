@@ -1,6 +1,7 @@
 import { useOrders } from "../context/PedidoCotext";
-import { useEffect, useState } from "react";
 import { MenuContent } from "./MenuContent";
+import { useEffect, useState } from "react";
+import { NavBar } from "./Navegation/NavBar";
 
 export const CategoryContent = () => {
   const [products, setProducts] = useState([]);
@@ -8,6 +9,7 @@ export const CategoryContent = () => {
   const { getProducts, getProByCate } = useOrders();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const loadProducts = async () => {
       const response = await getProducts();
       if (response !== undefined) {
@@ -28,7 +30,8 @@ export const CategoryContent = () => {
     const productsByCategory = Object.values(getProByCate(products));
 
     return (
-      <div>
+      <div className="mt-20">
+        <NavBar />
         {productsByCategory.map((product) => (
           <MenuContent
             key={product.id_categoria}

@@ -1,3 +1,4 @@
+import { NavBar } from "../components/Navegation/NavBar";
 import { Table } from "../components/Table";
 import { useOrders } from "../context/PedidoCotext";
 import { useEffect, useState } from "react";
@@ -7,6 +8,8 @@ const Cocina = () => {
   const { socket, getOrders, getOrderByTable, deleteOrders } = useOrders();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
 
@@ -35,9 +38,9 @@ const Cocina = () => {
   const DeleteOders = async () => {
     const res = await deleteOrders();
     if (res === 200 || res === 204) {
-      setPedidos([])
+      setPedidos([]);
     }
-  }
+  };
 
   if (pedidos.length === 0) {
     return (
@@ -51,6 +54,7 @@ const Cocina = () => {
 
     return (
       <div className="bg-orange-700 h-screen w-full grid grid-cols-1">
+        <NavBar />
         <div className="h-auto w-full bg-gray-200 overflow-scroll">
           <ul className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
@@ -59,10 +63,10 @@ const Cocina = () => {
           </ul>
         </div>
         <button
-        className="bg-purple-900 h-12 w-full rounded-lg text-2xl font-bold text-white shadow-xl shadow-black"
-        onClick={() => DeleteOders()}
+          className="bg-purple-900 h-12 w-full rounded-lg text-2xl font-bold text-white shadow-xl shadow-black"
+          onClick={() => DeleteOders()}
         >
-          Limpiar Todo
+          Eliminar Todo
         </button>
       </div>
     );
