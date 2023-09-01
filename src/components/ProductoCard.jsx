@@ -36,28 +36,28 @@ export const ProductoCard = ({ product }) => {
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            cantidad: (value += 1),
+            cantidad: value > 400 ? value : (value += 1),
           });
         } else if (name === "mesa" && operator === "+") {
           setProducto({
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            mesa: (value += 1),
+            mesa: value > 400 ? value : (value += 1),
           });
         } else if (name === "cantidad" && operator === "-") {
           setProducto({
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            cantidad: (value <= 0 ? value : value -= 1),
+            cantidad: value <= 0 ? value : (value -= 1),
           });
         } else if (name === "mesa" && operator === "-") {
           setProducto({
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            mesa: (value <= 0 ? value : value -= 1),
+            mesa: value <= 0 ? value : (value -= 1),
           });
         }
       }
@@ -74,14 +74,14 @@ export const ProductoCard = ({ product }) => {
         setErr(false);
       }, 2000);
     } else if (
-      parseInt(producto.cantidad) === 0 ||
-      parseInt(producto.mesa) === 0
+      parseInt(producto.cantidad) <= 0 ||
+      parseInt(producto.mesa) <= 0
     ) {
       setErr(true);
       setTimeout(() => {
         setErr(false);
       }, 2000);
-    } else {
+    } else if (!Number.isNaN(Number(cantidad)) && !Number.isNaN(Number(mesa))) {
       const response = await createOrder(producto);
       if (response === 204) {
         socket.emit("nuevoPedido");
@@ -94,6 +94,8 @@ export const ProductoCard = ({ product }) => {
         console.log(producto);
         setOpen(false);
       }
+    } else {
+      navigate(0);
     }
   };
 
