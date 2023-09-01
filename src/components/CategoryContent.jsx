@@ -1,7 +1,7 @@
 import { useOrders } from "../context/PedidoCotext";
 import { MenuContent } from "./MenuContent";
 import { useEffect, useState } from "react";
-import { NavBar } from "./Navegation/NavBar";
+// import { NavBar } from "./Navegation/NavBar";
 
 export const CategoryContent = () => {
   const [products, setProducts] = useState([]);
@@ -31,7 +31,7 @@ export const CategoryContent = () => {
 
     return (
       <div className="mt-11 2xl:mt-52 xl:mt-32 w-full h-full flex flex-col items-center justify-center">
-        <NavBar />
+        {/* <NavBar /> */}
         {productsByCategory.map((product) => (
           <MenuContent
             key={product.id_categoria}
