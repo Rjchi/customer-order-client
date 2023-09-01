@@ -1,5 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { BsFillCupHotFill } from "react-icons/bs";
+import { MdLocalDrink, MdFastfood } from "react-icons/md";
+import { PiBowlFoodFill } from "react-icons/pi";
+import { GiChipsBag } from "react-icons/gi";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { ProductoCard } from "./ProductoCard";
 import { Fragment, useState } from "react";
 
@@ -14,28 +18,58 @@ export const MenuContent = ({ category, products }) => {
     );
   } else {
     return (
-      <div className={`flex flex-col bg-cyan-400 justify-items-center items-center h-full w-full`}>
+      <div
+        className={`flex flex-col justify-items-center items-center h-full w-full`}
+      >
         <Menu
           as="div"
           className={`m-3 flex flex-col w-full h-auto justify-start items-center`}
         >
-          {({ open }) => (
+          {
             <>
               <Menu.Button
-                className="flex flex-row w-full h-14 justify-around items-center rounded-xl bg-green-700 px-4 py-2 text-xl font-bold text-white hover:bg-green-600 focus:outline-none focus-visible:ring-1 focus-visible:ring-black focus-visible:ring-opacity-75"
+                className="flex flex-row w-full font-mono tracking-widest h-14 justify-between items-center rounded-xl bg-slate-500 px-11 py-10 text-xl font-bold text-white hover:bg-slate-600 outline-none ring-1 ring-black ring-opacity-75 shadow-lg shadow-black"
                 onClick={() => setMenuOpen(!menuOpen)}
               >
+                {category === "BEBIDAS CALIENTES" ? (
+                  <i>
+                    <BsFillCupHotFill className="text-3xl text-amber-400" />
+                  </i>
+                ) : category === "BEBIDAS FRIAS" ? (
+                  <i>
+                    <MdLocalDrink className="text-3xl text-blue-600" />
+                  </i>
+                ) : category === "ACOMPAÑANTES" ? (
+                  <i>
+                    <PiBowlFoodFill className="text-3xl text-amber-800" />
+                  </i>
+                ) : category === "ADICIONES" ? (
+                  <i>
+                    <GiChipsBag className="text-3xl text-purple-900" />
+                  </i>
+                ) : (
+                  <i>
+                    <MdFastfood className="text-3xl text-rose-600" />
+                  </i>
+                )}
                 {category}
-                <ChevronDownIcon
-                  className="ml-2 -mr-1 h-8 w-8 text-white hover:text-violet-200"
-                  aria-hidden="true"
-                />
+                {!menuOpen ? (
+                  <ChevronDownIcon
+                    className="ml-2 -mr-1 h-8 w-8 text-white hover:text-violet-200"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <ChevronUpIcon
+                    className="ml-2 -mr-1 h-8 w-8 text-white hover:text-violet-200"
+                    aria-hidden="true"
+                  />
+                )}
               </Menu.Button>
               <Transition
                 show={menuOpen}
                 as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
+                enter="transition ease-out duration-700"
+                enterFrom="transform opacity-10 scale-75"
                 enterTo="transform opacity-100 scale-100"
                 leave="transition ease-in duration-75"
                 leaveFrom="transform opacity-100 scale-100"
@@ -44,29 +78,27 @@ export const MenuContent = ({ category, products }) => {
                 {({ active }) => (
                   <Menu.Items
                     className={`overflow-scroll gap-1 mt-2 w-full ${
-                      !active ? "h-auto" : "h-20"
+                      !active ? "h-auto" : "h-20 duration"
                     } origin-top-right divide-y divide-black rounded-md bg-white shadow-lg shadow-black ring-2 ring-black ring-opacity-5 focus:outline-none`}
                   >
-                    <div className="px-1 py-1">
+                    <div className="px-3 py-4 bg-slate-200">
                       <Menu.Item
-                        className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 justify-center gap-3 items-center w-full h-full bg-slate-400"
+                        className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 justify-center gap-3 items-center w-full h-full bg-slate-200"
                         as="div"
                       >
-                        {({ active }) =>
-                          products.map((product) => (
-                            <ProductoCard
-                              key={product.id_producto}
-                              product={product}
-                            />
-                          ))
-                        }
+                        {products.map((product) => (
+                          <ProductoCard
+                            key={product.id_producto}
+                            product={product}
+                          />
+                        ))}
                       </Menu.Item>
                     </div>
                   </Menu.Items>
                 )}
               </Transition>
             </>
-          )}
+          }
         </Menu>
       </div>
     );

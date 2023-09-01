@@ -98,7 +98,7 @@ export const ProductoCard = ({ product }) => {
   };
 
   return (
-    <div className="w-full h-auto bg-amber-600 rounded-lg">
+    <div className="cursor-pointer w-full h-auto bg-amber-600 rounded-lg shadow-md shadow-black hover:bg-amber-700 transform-colors ease-out duration-300">
       <div
         className=" flex flex-col items-center justify-center text-center gap-1"
         onClick={() => setOpen(true)}
@@ -213,14 +213,24 @@ export const ProductoCard = ({ product }) => {
           </div>
         ) : (
           <>
-            <img
-              className={`w-auto h-auto rounded-tl-lg rounded-tr-lg`}
-              src="https://placekitten.com/300/250"
-              alt="placeholder"
-            />
-            <h1 className={`font-bold text-base`}>{product.nombre_producto}</h1>
-            <p className={`font-bold text-base text-amber-400 mb-3`}>
-              ${product.precio_producto}
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <div className="relative w-full h-full">
+                <img
+                  className={`object-cover rounded-tl-lg rounded-tr-lg w-full h-full hover:scale-105 transition-transform duration-300`}
+                  src="https://placekitten.com/300/250"
+                  alt="placeholder"
+                />
+              </div>
+            </div>
+            <h1
+              className={`font-bold text-lg text-black font-mono hover:text-amber-300 transform-colors ease-out duration-200`}
+            >
+              {product.nombre_producto}
+            </h1>
+            <p
+              className={`font-bold text-base font-serif textblack mb-3 shadow-sm shadow-black hover:text-amber-300 transform-colors ease-out duration-200`}
+            >
+              $ {product.precio_producto}
             </p>
           </>
         )}
@@ -228,3 +238,5 @@ export const ProductoCard = ({ product }) => {
     </div>
   );
 };
+
+// FALTA ESTILIZAR EL FORMULARIO DE PEDIDOS

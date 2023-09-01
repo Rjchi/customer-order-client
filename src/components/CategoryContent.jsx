@@ -30,7 +30,7 @@ export const CategoryContent = () => {
     const productsByCategory = Object.values(getProByCate(products));
 
     return (
-      <div className="mt-20">
+      <div className="mt-11 2xl:mt-52 xl:mt-32 w-full h-full flex flex-col items-center justify-center">
         <NavBar />
         {productsByCategory.map((product) => (
           <MenuContent
