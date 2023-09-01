@@ -7,7 +7,6 @@
   z-index: -1;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   border-radius: 30px;
   -webkit-border-radius: 30px;
@@ -16,7 +15,6 @@
   -o-border-radius: 30px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #d8d8d8;
   opacity: 10px;
@@ -26,7 +24,7 @@
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
 }
-/* Handle */
+
 ::-webkit-scrollbar-thumb:hover {
   background: #c9c9c9;
   opacity: 10px;
@@ -35,4 +33,18 @@
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
+}
+
+#mesa::-webkit-inner-spin-button,
+#mesa::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+#cantidad::-webkit-inner-spin-button,
+#cantidad::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }

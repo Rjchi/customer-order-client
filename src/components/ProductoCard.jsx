@@ -50,14 +50,14 @@ export const ProductoCard = ({ product }) => {
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            cantidad: (value -= 1),
+            cantidad: (value <= 0 ? value : value -= 1),
           });
         } else if (name === "mesa" && operator === "-") {
           setProducto({
             ...producto,
             nombre: product.nombre_producto,
             precio: product.precio_producto,
-            mesa: (value -= 1),
+            mesa: (value <= 0 ? value : value -= 1),
           });
         }
       }
@@ -104,12 +104,12 @@ export const ProductoCard = ({ product }) => {
         onClick={() => setOpen(true)}
       >
         {open ? (
-          <div className="absolute z-10 top-0 left-0 w-full h-full bg-cyan-300 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1">
+          <div className="absolute z-10 top-0 left-0 w-full h-full bg-slate-300 bg-opacity-70 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1">
             <form
-              className="flex flex-col bg-teal-600 w-4/6 h-64 rounded-lg items-center justify-center"
+              className="flex flex-col bg-white w-4/6 h-64 rounded-lg items-center justify-center shadow-lg shadow-black border border-solid border-black p-0"
               onSubmit={handleSubmit}
             >
-              <div className="grid grid-cols-3 items-center justify-around w-full h-44 bg-slate-200">
+              <div className="grid grid-cols-3 items-center justify-around w-full h-full bg-slate-200 rounded-lg">
                 <div
                   className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black "
                   onClick={() => {
@@ -138,7 +138,7 @@ export const ProductoCard = ({ product }) => {
                     err
                       ? "transition ease-linear border border-red-600 bg-red-300 "
                       : ""
-                  }outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10`}
+                  }outline-none text-lg appearance-none font-mono font-bold border border-solid border-black shadow-lg shadow-black rounded-md w-auto text-center h-10`}
                 />
                 <div
                   className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black "
@@ -184,7 +184,7 @@ export const ProductoCard = ({ product }) => {
                     err
                       ? "transition ease-linear border border-red-600 bg-red-300 "
                       : ""
-                  } outline-none shadow-lg shadow-black rounded-md w-auto text-center h-10`}
+                  } outline-none shadow-lg appearance-none border border-solid border-black text-lg font-mono font-bold shadow-black rounded-md w-auto text-center h-10`}
                 />
                 <div
                   className="cursor-pointer m-auto p-5 bg-blue-500 rounded-full w-auto h-auto text-white font-bold text-center shadow-lg shadow-black"
@@ -203,11 +203,16 @@ export const ProductoCard = ({ product }) => {
                   ✚
                 </div>
               </div>
-              <div className=" w-full h-16 flex flex-row items-center justify-around bg-slate-600">
-                <button className="" type="submit">
+              <div className=" w-full h-24 rounded-lg flex flex-row items-center justify-around bg-gray-400 border-t border-solid border-black p-0">
+                <button
+                  className="p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-600 hover:text-white ease-out duration-1000"
+                  type="submit"
+                >
                   Hacer Pedido
                 </button>
-                <div className="cursor-pointer">Cancelar</div>
+                <div className="cursor-pointer p-3 rounded-sm text-white shadow-sm border border-solid border-black shadow-black bg-rose-500 font-mono font-bold hover:bg-rose-600 hover:text-white ease-out duration-1000">
+                  Cancelar
+                </div>
               </div>
             </form>
           </div>
@@ -238,5 +243,3 @@ export const ProductoCard = ({ product }) => {
     </div>
   );
 };
-
-// FALTA ESTILIZAR EL FORMULARIO DE PEDIDOS
