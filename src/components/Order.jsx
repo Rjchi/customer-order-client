@@ -27,7 +27,7 @@ export const Order = ({ order }) => {
         <div className="font-mono font-bold text-sm p-3 bg-black rounded-full">
           {order.nombre}
         </div>
-        <div className="text-yellow-400 flex flex-col items-center justify-center font-bold">
+        <div className="text-amber-300 flex flex-col items-center justify-center font-bold">
           {order.cantidad} unidad(es)
         </div>
         <div className="font-mono font-bold">

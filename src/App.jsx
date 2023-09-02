@@ -2,6 +2,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 
 import Cocina from "./pages/Cocina";
+import { Caja } from "./pages/Caja";
 import { NotFound } from "./pages/NotFound";
 
 import { PedidoContextProvider } from "./context/PedidoCotext";
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<CategoryContent />} />
 
           <Route path="/cocina" element={<Cocina />} />
+          <Route path="/caja" element={<Caja />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
