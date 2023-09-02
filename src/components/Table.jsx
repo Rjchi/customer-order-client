@@ -27,7 +27,7 @@ export const Table = ({ table, orders }) => {
           </h1>
           {orders &&
             orders.map((order) => (
-              <div className="bg-slate-300 py-1 rounded-sm w-full h-full border border-black shadow-sm shadow-black" key={order.id}>
+              <div className="bg-slate-300 flex flex-row gap-3 justify-center px-1 py-1 rounded-sm w-full h-full border border-black shadow-sm shadow-black" key={order.id}>
                 <Order order={order} />
                 <button
                   className="bg-rose-500 text-slate-200 p-3 font-mono font-bold border border-black rounded-lg hover:bg-rose-600 hover:text-white ease-linear duration-200"
