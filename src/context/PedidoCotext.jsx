@@ -5,6 +5,7 @@ import {
   getOrdersRequest,
   deleteOrdersRequest,
   deleteOrderRequest,
+  deleteOrderByTableRequest,
 } from "../api/pedidos.api";
 import { createContext, useContext } from "react";
 
@@ -35,7 +36,7 @@ export const PedidoContextProvider = ({ children }) => {
       const { mesa, precio, cantidad } = order;
 
       if (!acc[mesa]) {
-        acc[mesa] = { mesa, pedidos: [], total:0 };
+        acc[mesa] = { mesa, pedidos: [], total: 0 };
       }
 
       acc[mesa].pedidos.push(order);
@@ -61,7 +62,7 @@ export const PedidoContextProvider = ({ children }) => {
   const getOrders = async () => {
     try {
       const response = await getOrdersRequest();
-      return response.data
+      return response.data;
     } catch (error) {
       console.log(error.message);
     }
@@ -105,18 +106,29 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await deleteOrdersRequest();
       return response.status;
     } catch (error) {
-      console.log(`Error al eliminar pedidos detalles: ${error.message}`)
+      console.log(`Error al eliminar pedidos detalles: ${error.message}`);
     }
-  }
+  };
 
   const deleteOrder = async (id) => {
     try {
       const response = await deleteOrderRequest(id);
       return response.status;
     } catch (error) {
-      console.log(`Error al eliminar pedido detalles: ${error.message}`)
+      console.log(`Error al eliminar pedido detalles: ${error.message}`);
     }
-  }
+  };
+
+  const deleteOrdersByTable = async (table) => {
+    try {
+      const response = await deleteOrderByTableRequest(table);
+      return response.status;
+    } catch (error) {
+      console.log(
+        `Error al eliminar pedidos de una mesa detalles: ${error.message}`
+      );
+    }
+  };
 
   return (
     <PedidoContext.Provider
@@ -131,6 +143,7 @@ export const PedidoContextProvider = ({ children }) => {
         getOrderByTable,
         deleteOrders,
         deleteOrder,
+        deleteOrdersByTable,
       }}
     >
       {children}

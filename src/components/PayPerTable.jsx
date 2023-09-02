@@ -1,12 +1,15 @@
 import { PayOrder } from "./PayOrder";
 import { useState } from "react";
+import { useOrders } from "../context/PedidoCotext";
 
 export const PayPerTable = ({ table, orders, total }) => {
   const [mostrarPedidos, setMostrarPedidos] = useState(true);
+  const { deleteOrdersByTable } = useOrders();
 
-  const DeleteOrderByTable = (data) => {
+  const DeleteOrderByTable = async () => {
     try {
       setMostrarPedidos(false);
+      await deleteOrdersByTable(table);
     } catch (error) {
       console.log(error.message);
     }
@@ -41,7 +44,7 @@ export const PayPerTable = ({ table, orders, total }) => {
                 </p>
                 <button
                   className="bg-rose-500 w-full text-white font-mono font-bold text-xl h-40 p-5 border border-black shadow-lg shadow-black rounded-md"
-                  onClick={() => DeleteOrderByTable(orders)}
+                  onClick={() => DeleteOrderByTable()}
                 >
                   LIMPIAR
                 </button>

@@ -22,3 +22,6 @@ export const deleteOrdersRequest = async () =>
 
 export const deleteOrderRequest = async (id) =>
   await axios.delete(`${API}/api/delete-order/${id}`)
+
+export const deleteOrderByTableRequest = async (table) =>
+  await axios.delete(`${API}/api/delete-orders-by-table/${table}`)
