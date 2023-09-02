@@ -10,10 +10,6 @@ export const Order = ({ order }) => {
           {order.cantidad} unidad(es)
         </div>
         <div>
-          <div className="bg-orange-700">Total:</div>
-          {order.precio}
-        </div>
-        <div>
           <div className="bg-purple-900">Hora pedido: </div>
           {order.hora_pedido}
         </div>

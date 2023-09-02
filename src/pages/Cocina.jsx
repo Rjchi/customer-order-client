@@ -1,4 +1,4 @@
-import { NavBar } from "../components/Navegation/NavBar";
+// import { NavBar } from "../components/Navegation/NavBar";
 import { Table } from "../components/Table";
 import { useOrders } from "../context/PedidoCotext";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ const Cocina = () => {
   const { socket, getOrders, getOrderByTable, deleteOrders } = useOrders();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
 
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
@@ -53,21 +53,23 @@ const Cocina = () => {
     console.log(ordersByTable);
 
     return (
-      <div className="bg-orange-700 h-screen w-full grid grid-cols-1">
-        <NavBar />
-        <div className="h-auto w-full bg-gray-200 overflow-scroll">
+      <div className="bg-blue-300 rounded-xl h-auto w-full border border-black p-0 py-3 grid grid-cols-1 items-center justify-center">
+        {/* <NavBar /> */}
+        <div className="h-auto w-full bg-transparent overflow-scroll">
           <ul className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
               <Table key={index} table={order.mesa} orders={order.pedidos} />
             ))}
           </ul>
         </div>
-        <button
-          className="bg-purple-900 h-12 w-full rounded-lg text-2xl font-bold text-white shadow-xl shadow-black"
-          onClick={() => DeleteOders()}
-        >
-          Eliminar Todo
-        </button>
+        <div className="flex flex-col items-center justify-center mb-5">
+          <button
+            className="bg-rose-600 hover:bg-rose-700 ease-out duration-700 h-12 w-6/12 border border-black p-0 font-mono rounded-lg text-xl font-bold text-white shadow-xl shadow-black"
+            onClick={() => DeleteOders()}
+          >
+            Eliminar Todo
+          </button>
+        </div>
       </div>
     );
   }
