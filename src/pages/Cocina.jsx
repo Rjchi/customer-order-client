@@ -8,7 +8,7 @@ const Cocina = () => {
   const { socket, getOrders, getOrderByTable, deleteOrders } = useOrders();
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");

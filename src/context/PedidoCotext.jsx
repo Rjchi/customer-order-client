@@ -32,13 +32,14 @@ export const PedidoContextProvider = ({ children }) => {
 
   const getOrderByTable = (orders) => {
     const ordersByTable = orders.reduce((acc, order) => {
-      const { mesa } = order;
+      const { mesa, precio, cantidad } = order;
 
       if (!acc[mesa]) {
-        acc[mesa] = { mesa, pedidos: [] };
+        acc[mesa] = { mesa, pedidos: [], total:0 };
       }
 
       acc[mesa].pedidos.push(order);
+      acc[mesa].total += precio * cantidad;
 
       return acc;
     }, {});

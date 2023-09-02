@@ -33,7 +33,7 @@ export const Table = ({ table, orders }) => {
                   className="bg-rose-500 text-slate-200 p-3 font-mono font-bold border border-black rounded-lg hover:bg-rose-600 hover:text-white ease-linear duration-200"
                   onClick={() => DeleteOrderById(order.id)}
                 >
-                  DELETE
+                  ELIMINAR
                 </button>
               </div>
             ))}

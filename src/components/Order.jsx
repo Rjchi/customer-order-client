@@ -12,7 +12,7 @@ export const Order = ({ order }) => {
       const horaPedido = moment(order.hora_pedido, "HH:mm:ss");
       // calcula la diferencia en minutos
       const minutos = ahora.diff(horaPedido, "minutes");
-      setMinutosTranscurridos(minutos);
+      setMinutosTranscurridos(minutos < 0  ? (minutos) - (minutos*2) : minutos);
     }, 60000);
 
     return () => {
