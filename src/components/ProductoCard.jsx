@@ -7,7 +7,6 @@ export const ProductoCard = ({ product }) => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
   const { socket, createOrder } = useOrders();
-
   const [producto, setProducto] = useState({
     nombre: "",
     cantidad: "",
@@ -101,12 +100,11 @@ export const ProductoCard = ({ product }) => {
 
   return (
     <div className="cursor-pointer w-full h-auto bg-amber-600 rounded-lg shadow-md shadow-black hover:bg-amber-700 transform-colors ease-out duration-300">
-      <div
-        className=" flex flex-col items-center justify-center text-center gap-1"
-        onClick={() => setOpen(true)}
-      >
+      <div className=" flex flex-col items-center justify-center text-center gap-1">
         {open ? (
-          <div className="absolute z-10 top-0 left-0 w-full h-full bg-slate-300 bg-opacity-70 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1">
+          <div
+            className={`absolute z-10 top-0 left-0 w-full h-full bg-slate-300 bg-opacity-70 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1`}
+          >
             <form
               className="flex flex-col bg-white w-4/6 h-64 rounded-lg items-center justify-center shadow-lg shadow-black border border-solid border-black p-0"
               onSubmit={handleSubmit}
@@ -212,7 +210,12 @@ export const ProductoCard = ({ product }) => {
                 >
                   Hacer Pedido
                 </button>
-                <div className="cursor-pointer p-3 rounded-sm text-white shadow-sm border border-solid border-black shadow-black bg-rose-500 font-mono font-bold hover:bg-rose-600 hover:text-white ease-out duration-1000">
+                <div
+                  onClick={() => {
+                    setOpen(!open)
+                  }}
+                  className=" cursor-pointer p-3 rounded-sm text-white shadow-sm border border-solid border-black shadow-black bg-rose-500 font-mono font-bold hover:bg-rose-600 hover:text-white ease-out duration-1000"
+                >
                   Cancelar
                 </div>
               </div>
@@ -220,7 +223,10 @@ export const ProductoCard = ({ product }) => {
           </div>
         ) : (
           <>
-            <div className="w-full h-full flex flex-col justify-center items-center">
+            <div
+              onClick={() => setOpen(true)}
+              className="w-full h-full flex flex-col justify-center items-center"
+            >
               <div className="relative w-full h-full">
                 <img
                   className={`object-cover rounded-tl-lg rounded-tr-lg w-full h-full hover:scale-105 transition-transform duration-300`}
@@ -230,11 +236,13 @@ export const ProductoCard = ({ product }) => {
               </div>
             </div>
             <h1
+              onClick={() => setOpen(true)}
               className={`font-bold text-lg text-black font-mono hover:text-amber-300 transform-colors ease-out duration-200`}
             >
               {product.nombre_producto}
             </h1>
             <p
+              onClick={() => setOpen(true)}
               className={`font-bold text-base font-serif textblack mb-3 shadow-sm shadow-black hover:text-amber-300 transform-colors ease-out duration-200`}
             >
               $ {product.precio_producto}
