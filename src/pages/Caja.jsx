@@ -8,9 +8,9 @@ export const Caja = () => {
   const { socket, getOrders, getOrderByTable, deleteOrders } = useOrders();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     socket.emit("cajaConectada");
+
+    window.scrollTo(0, 0);
 
     const loadOrders = async () => {
       const response = await getOrders();
@@ -24,7 +24,7 @@ export const Caja = () => {
     }
 
     socket.on("nuevoPedidoCocina", () => {
-      console.log("ENTRO")
+      console.log("ENTRO");
       loadOrders();
     });
 
@@ -44,9 +44,7 @@ export const Caja = () => {
 
   if (pedidos.length === 0) {
     // socket.emit("recargaPedidos");
-    return (
-      <Spinner />
-    );
+    return <Spinner />;
   } else {
     const ordersByTable = Object.values(getOrderByTable(pedidos));
     console.log(ordersByTable);

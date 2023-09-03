@@ -12,7 +12,7 @@ const Cocina = () => {
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
 
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 
     const loadOrders = async () => {
       const response = await getOrdersNotCheck();
