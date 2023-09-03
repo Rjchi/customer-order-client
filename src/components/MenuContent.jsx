@@ -1,21 +1,18 @@
-import { Menu, Transition } from "@headlessui/react";
-import { BsFillCupHotFill } from "react-icons/bs";
-import { MdLocalDrink, MdFastfood } from "react-icons/md";
-import { PiBowlFoodFill } from "react-icons/pi";
 import { GiChipsBag } from "react-icons/gi";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import { ProductoCard } from "./ProductoCard";
+import { Spinner } from "../components/Spinner";
+import { PiBowlFoodFill } from "react-icons/pi";
+import { BsFillCupHotFill } from "react-icons/bs";
+import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { MdLocalDrink, MdFastfood } from "react-icons/md";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
 export const MenuContent = ({ category, products }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   if (products.length === 0 || category === undefined || category === null) {
-    return (
-      <h1 className="flex justify-center items-center text-white">
-        Loading...
-      </h1>
-    );
+    return <Spinner />;
   } else {
     return (
       <div

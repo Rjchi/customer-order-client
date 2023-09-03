@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useOrders } from "../context/PedidoCotext";
+import { Spinner } from "../components/Spinner";
 import { PayPerTable } from "../components/PayPerTable";
 
 export const Caja = () => {
@@ -23,6 +24,7 @@ export const Caja = () => {
     }
 
     socket.on("nuevoPedidoCocina", () => {
+      console.log("ENTRO")
       loadOrders();
     });
 
@@ -41,11 +43,9 @@ export const Caja = () => {
   };
 
   if (pedidos.length === 0) {
-    socket.emit("recargaPedidos");
+    // socket.emit("recargaPedidos");
     return (
-      <h1 className="flex justify-center items-center text-white">
-        Loading...
-      </h1>
+      <Spinner />
     );
   } else {
     const ordersByTable = Object.values(getOrderByTable(pedidos));
@@ -61,6 +61,7 @@ export const Caja = () => {
                 table={order.mesa}
                 total={order.total}
                 orders={order.pedidos}
+                value={true}
               />
             ))}
           </ul>

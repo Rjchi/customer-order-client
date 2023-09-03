@@ -10,6 +10,9 @@ export const NavBar = () => {
         <li>
           <Link to={`/`}>Cliente</Link>
         </li>
+        <li>
+          <Link to={`/caja`}>Caja</Link>
+        </li>
       </ul>
     </nav>
   );

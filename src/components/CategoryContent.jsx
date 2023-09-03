@@ -1,3 +1,4 @@
+import { Spinner } from "../components/Spinner";
 import { useOrders } from "../context/PedidoCotext";
 import { MenuContent } from "./MenuContent";
 import { useEffect, useState } from "react";
@@ -22,9 +23,7 @@ export const CategoryContent = () => {
 
   if (products.length === 0) {
     return (
-      <h1 className="flex justify-center items-center text-white">
-        Loading...
-      </h1>
+      <Spinner />
     );
   } else {
     const productsByCategory = Object.values(getProByCate(products));

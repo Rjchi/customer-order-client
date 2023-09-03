@@ -1,22 +1,24 @@
+import { Spinner } from "../components/Spinner";
 import { PayOrder } from "./PayOrder";
 import { useOrders } from "../context/PedidoCotext";
 import { useState, useEffect } from "react";
 
 export const PayPerTable = ({ table, orders, total }) => {
   const [mostrarPedidos, setMostrarPedidos] = useState(true);
+  const [anterior, setAnterior] = useState("");
   const { socket, deleteOrdersByTable } = useOrders();
 
   const DeleteOrderByTable = async () => {
-    try {
-      socket.emit("recargaPedidos");
-      setMostrarPedidos(false);
-      await deleteOrdersByTable(table);
-    } catch (error) {
-      console.log(error.message);
-    }
+    socket.emit("recargaPedidos");
+    setMostrarPedidos(!mostrarPedidos);
+    setAnterior(orders[0].id);
+    await deleteOrdersByTable(table);
   };
-  useEffect(() => {}, [deleteOrdersByTable, table]);
-
+  useEffect(() => {
+    if (parseInt(anterior) !== orders[0].id) {
+      setMostrarPedidos(true);
+    }
+  }, [deleteOrdersByTable, table, anterior, orders]);
   if (orders && orders.length > 0) {
     return (
       <>
@@ -61,10 +63,6 @@ export const PayPerTable = ({ table, orders, total }) => {
       </>
     );
   } else {
-    return (
-      <h1 className="flex justify-center items-center text-white">
-        Loading...
-      </h1>
-    );
+    return <Spinner />;
   }
 };

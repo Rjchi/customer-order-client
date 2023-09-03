@@ -2,18 +2,17 @@
 import { Table } from "../components/Table";
 import { useOrders } from "../context/PedidoCotext";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { Spinner } from "../components/Spinner";
 
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
-  const navigate = useNavigate();
   const { socket, getOrdersNotCheck, getOrderByTable } = useOrders();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
+
+    // window.scrollTo(0, 0);
 
     const loadOrders = async () => {
       const response = await getOrdersNotCheck();
@@ -32,7 +31,10 @@ const Cocina = () => {
     });
 
     socket.on("recargaPedidos", () => {
-      navigate(0)
+      setPedidos([]);
+      if (pedidos.length === 0) {
+        loadOrders();
+      }
     });
 
     // Importante: Limpieza al desmontar el componente
@@ -40,14 +42,10 @@ const Cocina = () => {
       socket.off("nuevoPedidoCocina");
       socket.off("recargaPedidos");
     };
-  }, [pedidos, socket, getOrdersNotCheck, navigate]);
+  }, [pedidos, socket, getOrdersNotCheck]);
 
   if (pedidos.length === 0) {
-    return (
-      <h1 className="flex justify-center items-center text-white">
-        Loading...
-      </h1>
-    );
+    return <Spinner />;
   } else {
     const ordersByTable = Object.values(getOrderByTable(pedidos));
     console.log(ordersByTable);
