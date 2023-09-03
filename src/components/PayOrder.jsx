@@ -5,6 +5,10 @@ export const PayOrder = ({ order }) => {
   const [minutosTranscurridos, setMinutosTranscurridos] = useState(0);
 
   useEffect(() => {
+    const ahora = moment();
+    const horaPedido = moment(order.hora_pedido, "HH:mm:ss");
+    const minutos = ahora.diff(horaPedido, "minutes");
+    setMinutosTranscurridos(minutos < 0 ? minutos - minutos * 2 : minutos);
     const interval = setInterval(() => {
       const ahora = moment();
       const horaPedido = moment(order.hora_pedido, "HH:mm:ss");
