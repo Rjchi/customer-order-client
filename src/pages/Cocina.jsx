@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
   const navigate = useNavigate();
-  const { socket, getOrders, getOrderByTable } = useOrders();
+  const { socket, getOrdersNotCheck, getOrderByTable } = useOrders();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,7 +16,7 @@ const Cocina = () => {
     socket.emit("cocinaConectada");
 
     const loadOrders = async () => {
-      const response = await getOrders();
+      const response = await getOrdersNotCheck();
       if (response.length !== 0) {
         setPedidos(response);
       }
@@ -40,7 +40,7 @@ const Cocina = () => {
       socket.off("nuevoPedidoCocina");
       socket.off("recargaPedidos");
     };
-  }, [pedidos, socket, getOrders, navigate]);
+  }, [pedidos, socket, getOrdersNotCheck, navigate]);
 
   if (pedidos.length === 0) {
     return (

@@ -6,6 +6,8 @@ import {
   deleteOrdersRequest,
   deleteOrderRequest,
   deleteOrderByTableRequest,
+  getOrdersNotCheckRequest,
+  updateCheckRequest,
 } from "../api/pedidos.api";
 import { createContext, useContext } from "react";
 
@@ -59,9 +61,27 @@ export const PedidoContextProvider = ({ children }) => {
     }
   };
 
+  const updateCheck = async (id) => {
+    try {
+      const response = await updateCheckRequest(id);
+      return response.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getOrders = async () => {
     try {
       const response = await getOrdersRequest();
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const getOrdersNotCheck = async () => {
+    try {
+      const response = await getOrdersNotCheckRequest();
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -144,6 +164,8 @@ export const PedidoContextProvider = ({ children }) => {
         deleteOrders,
         deleteOrder,
         deleteOrdersByTable,
+        getOrdersNotCheck,
+        updateCheck,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ export const PayPerTable = ({ table, orders, total }) => {
   const [mostrarPedidos, setMostrarPedidos] = useState(true);
   const { socket, deleteOrdersByTable } = useOrders();
 
-  const DeleteOrderByTable = async (e) => {
+  const DeleteOrderByTable = async () => {
     try {
       socket.emit("recargaPedidos");
       setMostrarPedidos(false);
@@ -47,7 +47,7 @@ export const PayPerTable = ({ table, orders, total }) => {
                   </p>
                   <button
                     className="bg-rose-500 hover:bg-rose-600 ease-linear duration-200 w-full text-white font-mono font-bold text-xl h-40 p-5 border border-black shadow-lg shadow-black rounded-md"
-                    onClick={(e) => DeleteOrderByTable(e)}
+                    onClick={() => DeleteOrderByTable()}
                   >
                     LIMPIAR
                   </button>
