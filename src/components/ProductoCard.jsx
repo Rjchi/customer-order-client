@@ -230,7 +230,8 @@ export const ProductoCard = ({ product }) => {
               <div className="relative w-full h-full">
                 <img
                   className={`object-cover rounded-tl-lg rounded-tr-lg w-full h-full hover:scale-105 transition-transform duration-300`}
-                  src="https://placekitten.com/300/250"
+                  // src="https://placekitten.com/300/250"
+                  src="../../../public/placeholder.jpg"
                   alt="placeholder"
                 />
               </div>
