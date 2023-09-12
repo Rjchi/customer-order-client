@@ -9,10 +9,13 @@ export const PayPerTable = ({ table, orders, total }) => {
   const { socket, deleteOrdersByTable } = useOrders();
 
   const DeleteOrderByTable = async () => {
-    socket.emit("recargaPedidos");
     setMostrarPedidos(!mostrarPedidos);
     setAnterior(orders[0].id);
-    await deleteOrdersByTable(table);
+    const res = await deleteOrdersByTable(table);
+    if (res === 200) {
+      // console.log("200")
+      socket.emit("recargaPedidos");
+    }
   };
   useEffect(() => {
     if (parseInt(anterior) !== orders[0].id) {
