@@ -69,14 +69,14 @@ export const Caja = () => {
             ))}
           </ul>
         </div>
-        <div className="flex flex-col items-center justify-center mb-5">
+        {/* <div className="flex flex-col items-center justify-center mb-5">
           <button
             className="bg-rose-600 hover:bg-rose-700 ease-out duration-700 h-12 w-6/12 border border-black p-0 font-mono rounded-lg text-xl font-bold text-white shadow-xl shadow-black"
             onClick={() => DeleteOrders()}
           >
             Eliminar Todos
           </button>
-        </div>
+        </div> */}
       </div>
     );
   }

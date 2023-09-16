@@ -74,7 +74,7 @@ export const MenuProductsByCategory = ({ category, products }) => {
               >
                 {({ active }) => (
                   <Menu.Items
-                    className={`overflow-scroll gap-1 mt-2 w-full ${
+                    className={`gap-1 mt-2 w-full ${
                       !active ? "h-auto" : "h-20 duration"
                     } origin-top-right divide-y divide-black rounded-md bg-white shadow-lg shadow-black ring-2 ring-black ring-opacity-5 focus:outline-none`}
                   >

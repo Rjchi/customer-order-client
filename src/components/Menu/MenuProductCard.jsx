@@ -224,27 +224,27 @@ export const MenuProductCard = ({ product }) => {
         ) : (
           <>
             <div
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen(!open)}
               className="w-full h-full flex flex-col justify-center items-center"
             >
               <div className="relative w-full h-full">
                 <img
                   className={`object-cover rounded-tl-lg rounded-tr-lg w-full h-full hover:scale-105 transition-transform duration-300`}
-                  // src="https://baconmockup.com/410/410/"
-                  src="https://p-hold.com/430/430"
+                  src="https://baconmockup.com/410/410/"
+                  // src="https://p-hold.com/430/430"
                   // src="../../assets/placeholder.jpg"
                   alt="placeholder"
                 />
               </div>
             </div>
             <h1
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen(!open)}
               className={`font-bold text-lg text-black font-mono hover:text-amber-300 transform-colors ease-out duration-200`}
             >
               {product.nombre_producto}
             </h1>
             <p
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen(!open)}
               className={`font-bold text-base font-serif textblack mb-3 shadow-sm shadow-black hover:text-amber-300 transform-colors ease-out duration-200`}
             >
               $ {product.precio_producto}

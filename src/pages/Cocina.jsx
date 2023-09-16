@@ -8,9 +8,8 @@ const Cocina = () => {
   const { socket, getOrdersNotCheck, getOrderByTable } = useOrders();
 
   useEffect(() => {
-    socket.emit("cocinaConectada");
-
     window.scrollTo(0, 0);
+    socket.emit("cocinaConectada");
 
     const loadOrders = async () => {
       const response = await getOrdersNotCheck();
@@ -53,7 +52,11 @@ const Cocina = () => {
         <div className="h-auto w-full bg-transparent">
           <ul className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
-              <CocinaTable key={index} table={order.mesa} orders={order.pedidos} />
+              <CocinaTable
+                key={index}
+                table={order.mesa}
+                orders={order.pedidos}
+              />
             ))}
           </ul>
         </div>
