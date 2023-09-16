@@ -3,3 +3,11 @@ body {
   height: 100%;
   width: 100%;
 }
+
+.bg-cafeMagico {
+  background-image: url('https://www.eje21.com.co/site/wp-content/uploads/2023/07/unnamed-2023-07-05t070555.860.jpg');
+  /* background-image: url('https://scontent-bog1-1.xx.fbcdn.net/v/t39.30808-6/350295931_2588035948031144_3909856373250042694_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=a2f6c7&_nc_eui2=AeGC1tMiP7yxd8QjTqQYdaUiI_2kCJZQ6pwj_aQIllDqnHznMl4n33mr0meqE46ADk5x8Yz6d-F4Ahhuluc611ed&_nc_ohc=UMTj1t-QE6IAX_DBtib&_nc_ht=scontent-bog1-1.xx&oh=00_AfAcUCAyzgfJGTnPdYhktiZ1MsaaMXffJ4Fo2n1xNeaToQ&oe=650A80E9'); */
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+}
