@@ -28,8 +28,13 @@ export const Caja = () => {
       loadOrders();
     });
 
+    socket.on("recargaPedidosCaja", () => {
+        loadOrders();
+    });
+
     return () => {
       socket.off("nuevoPedidoCocina");
+      socket.off("recargaPedidosCaja");
     };
   }, [pedidos, socket, getOrders]);
 

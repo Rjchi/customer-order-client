@@ -54,7 +54,7 @@ export const CajaPayPerTable = ({ table, orders, total }) => {
                     className="bg-rose-500 hover:bg-rose-600 ease-linear duration-200 w-full text-white font-mono font-bold text-xl h-40 p-5 border border-black shadow-lg shadow-black rounded-md"
                     onClick={() => DeleteOrderByTable()}
                   >
-                    LIMPIAR
+                    ELIMINAR PEDIDOS
                   </button>
                 </ul>
               </div>
