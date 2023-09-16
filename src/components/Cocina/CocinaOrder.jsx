@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const CocinaOrder = ({ order }) => {
   const [minutosTranscurridos, setMinutosTranscurridos] = useState(0);
   const [check, setCheck] = useState(true);
-  const { updateCheck } = useOrders();
+  const { updateCheck, deleteOrder, socket } = useOrders();
 
   const btnUpdateCheck = async (id) => {
     try {
@@ -15,6 +15,20 @@ export const CocinaOrder = ({ order }) => {
       console.log(error.message);
     }
   };
+
+  const deleteOrderById = async (id) => {
+    try {
+      console.log(id)
+      const res = await deleteOrder(id);
+      console.log("RESPONSE: ", res)
+      if (res === 200 || res === 204) {
+        socket.emit("recargaPedidos");
+        socket.emit("recargaPedidosCaja");
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   useEffect(() => {
     const ahora = moment();
@@ -41,6 +55,12 @@ export const CocinaOrder = ({ order }) => {
     <>
       {check ? (
         <>
+        <button
+            className="bg-rose-500 text-slate-200 p-3 font-mono font-bold border border-black rounded-lg hover:text-white hover:bg-rose-600 ease-linear duration-200"
+            onClick={() => deleteOrderById(order.id)}
+          >
+            ELIMINAR
+          </button>
           <div className="flex flex-col items-center w-5/6 h-auto justify-center p-3 font-mono rounded-lg bg-slate-600 border border-black text-white">
             <div className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-center justify-center gap-3 p-1">
               <div className="font-mono font-bold text-sm p-3 bg-black rounded-full">
