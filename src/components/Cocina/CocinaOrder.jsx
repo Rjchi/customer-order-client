@@ -1,8 +1,8 @@
 import moment from "moment";
-import { useOrders } from "../context/PedidoCotext";
+import { useOrders } from "../../context/PedidoCotext";
 import { useEffect, useState } from "react";
 
-export const Order = ({ order }) => {
+export const CocinaOrder = ({ order }) => {
   const [minutosTranscurridos, setMinutosTranscurridos] = useState(0);
   const [check, setCheck] = useState(true);
   const { updateCheck } = useOrders();

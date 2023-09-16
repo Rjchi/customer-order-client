@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { Spinner } from "../components/utils/Spinner";
 import { useOrders } from "../context/PedidoCotext";
-import { Spinner } from "../components/Spinner";
-import { PayPerTable } from "../components/PayPerTable";
+import { CajaPayPerTable } from "../components/Caja/CajaPayPerTable";
+import { useEffect, useState } from "react";
 
 export const Caja = () => {
   const [pedidos, setPedidos] = useState([]);
@@ -51,10 +51,10 @@ export const Caja = () => {
 
     return (
       <div className="bg-transparent rounded-xl h-auto w-full py-3 grid grid-cols-1 items-center justify-center">
-        <div className="h-auto w-full bg-transparent overflow-scroll">
+        <div className="h-auto w-full bg-transparent">
           <ul className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
-              <PayPerTable
+              <CajaPayPerTable
                 key={index}
                 table={order.mesa}
                 total={order.total}

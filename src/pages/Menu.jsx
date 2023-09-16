@@ -1,12 +1,10 @@
-import { Spinner } from "../components/Spinner";
+import { Spinner } from "../components/utils/Spinner";
 import { useOrders } from "../context/PedidoCotext";
-import { MenuContent } from "./MenuContent";
 import { useEffect, useState } from "react";
-// import { NavBar } from "./Navegation/NavBar";
+import { MenuProductsByCategory } from "../components/Menu/MenuProductsByCategory";
 
-export const CategoryContent = () => {
+export const Menu = () => {
   const [products, setProducts] = useState([]);
-
   const { getProducts, getProByCate } = useOrders();
 
   useEffect(() => {
@@ -30,9 +28,8 @@ export const CategoryContent = () => {
 
     return (
       <div className="mt-11 2xl:mt-52 xl:mt-32 w-full h-full flex flex-col items-center justify-center">
-        {/* <NavBar /> */}
         {productsByCategory.map((product) => (
-          <MenuContent
+          <MenuProductsByCategory
             key={product.id_categoria}
             category={product.nombre_categoria}
             products={product.productos}

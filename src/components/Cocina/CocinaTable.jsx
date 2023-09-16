@@ -1,6 +1,6 @@
-import { Order } from "./Order";
+import { CocinaOrder } from "./CocinaOrder";
 
-export const Table = ({ table, orders }) => {
+export const CocinaTable = ({ table, orders }) => {
   return (
     <div className="text-center p-1 w-full h-full">
       <div className="w-full h-full">
@@ -17,7 +17,7 @@ export const Table = ({ table, orders }) => {
                 className="bg-slate-300 flex flex-row gap-3 justify-center px-1 py-1 rounded-sm w-full h-full border border-black shadow-sm shadow-black"
                 key={order.id}
               >
-                <Order order={order} />
+                <CocinaOrder order={order} />
               </div>
             ))}
         </ul>

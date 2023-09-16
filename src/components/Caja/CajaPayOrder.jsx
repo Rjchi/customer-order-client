@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-export const PayOrder = ({ order }) => {
+export const CajaPayOrder = ({ order }) => {
   const [minutosTranscurridos, setMinutosTranscurridos] = useState(0);
 
   useEffect(() => {

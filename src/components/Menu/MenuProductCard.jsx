@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { useOrders } from "../../context/PedidoCotext";
 import { useNavigate } from "react-router-dom";
-import { useOrders } from "../context/PedidoCotext";
 
-export const ProductoCard = ({ product }) => {
+export const MenuProductCard = ({ product }) => {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();

@@ -1,15 +1,13 @@
-// import { NavBar } from "../components/Navegation/NavBar";
-import { Table } from "../components/Table";
+import { Spinner } from "../components/utils/Spinner";
 import { useOrders } from "../context/PedidoCotext";
+import { CocinaTable } from "../components/Cocina/CocinaTable";
 import { useEffect, useState } from "react";
-import { Spinner } from "../components/Spinner";
 
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
   const { socket, getOrdersNotCheck, getOrderByTable } = useOrders();
 
   useEffect(() => {
-    // Conexión a la sala "cocina"
     socket.emit("cocinaConectada");
 
     window.scrollTo(0, 0);
@@ -52,11 +50,10 @@ const Cocina = () => {
 
     return (
       <div className="bg-transparent rounded-xl h-auto w-full py-3 grid grid-cols-1 items-center justify-center">
-        {/* <NavBar /> */}
-        <div className="h-auto w-full bg-transparent overflow-scroll">
+        <div className="h-auto w-full bg-transparent">
           <ul className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
-              <Table key={index} table={order.mesa} orders={order.pedidos} />
+              <CocinaTable key={index} table={order.mesa} orders={order.pedidos} />
             ))}
           </ul>
         </div>

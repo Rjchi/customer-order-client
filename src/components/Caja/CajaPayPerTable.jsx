@@ -1,9 +1,9 @@
-import { Spinner } from "../components/Spinner";
-import { PayOrder } from "./PayOrder";
-import { useOrders } from "../context/PedidoCotext";
+import { Spinner } from "../utils/Spinner";
+import { useOrders } from "../../context/PedidoCotext";
+import { CajaPayOrder } from "./CajaPayOrder";
 import { useState, useEffect } from "react";
 
-export const PayPerTable = ({ table, orders, total }) => {
+export const CajaPayPerTable = ({ table, orders, total }) => {
   const [mostrarPedidos, setMostrarPedidos] = useState(true);
   const [anterior, setAnterior] = useState("");
   const { socket, deleteOrdersByTable } = useOrders();
@@ -42,7 +42,7 @@ export const PayPerTable = ({ table, orders, total }) => {
                         key={order.id}
                         className="bg-slate-300 flex flex-col px-1 py-1 rounded-sm w-full h-full border border-black shadow-sm shadow-black"
                       >
-                        <PayOrder order={order} />
+                        <CajaPayOrder order={order} />
                       </div>
                     ))}
                   <p className="bg-slate-400 text-amber-300 text-xl font-mono font-bold border border-black p-5 h-full w-full flex flex-col justify-center items-center">

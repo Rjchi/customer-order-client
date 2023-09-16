@@ -1,14 +1,14 @@
+import { Spinner } from "../utils/Spinner";
 import { GiChipsBag } from "react-icons/gi";
-import { ProductoCard } from "./ProductoCard";
-import { Spinner } from "../components/Spinner";
 import { PiBowlFoodFill } from "react-icons/pi";
+import { MenuProductCard } from "./MenuProductCard";
 import { BsFillCupHotFill } from "react-icons/bs";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { MdLocalDrink, MdFastfood } from "react-icons/md";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 
-export const MenuContent = ({ category, products }) => {
+export const MenuProductsByCategory = ({ category, products }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   if (products.length === 0 || category === undefined || category === null) {
@@ -84,7 +84,7 @@ export const MenuContent = ({ category, products }) => {
                         as="div"
                       >
                         {products.map((product) => (
-                          <ProductoCard
+                          <MenuProductCard
                             key={product.id_producto}
                             product={product}
                           />
