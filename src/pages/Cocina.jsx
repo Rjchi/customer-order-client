@@ -51,7 +51,7 @@ const Cocina = () => {
     return (
       <div className="bg-transparent rounded-xl h-auto w-full py-3 grid grid-cols-1 items-center justify-center">
         <div className="h-auto w-full bg-transparent">
-          <ul className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
+          <ul className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {ordersByTable.map((order, index) => (
               <CocinaTable key={index} table={order.mesa} orders={order.pedidos} />
             ))}

@@ -18,17 +18,17 @@ export const CocinaOrder = ({ order }) => {
 
   const deleteOrderById = async (id) => {
     try {
-      console.log(id)
+      console.log(id);
       const res = await deleteOrder(id);
-      console.log("RESPONSE: ", res)
+      console.log("RESPONSE: ", res);
       if (res === 200 || res === 204) {
         socket.emit("recargaPedidos");
         socket.emit("recargaPedidosCaja");
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   useEffect(() => {
     const ahora = moment();
@@ -54,15 +54,15 @@ export const CocinaOrder = ({ order }) => {
   return (
     <>
       {check ? (
-        <>
-        <button
+        <div className="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row md:flex-col sm:flex-col gap-1 h-auto w-full">
+          <button
             className="bg-rose-500 text-slate-200 p-3 font-mono font-bold border border-black rounded-lg hover:text-white hover:bg-rose-600 ease-linear duration-200"
             onClick={() => deleteOrderById(order.id)}
           >
             ELIMINAR
           </button>
-          <div className="flex flex-col items-center w-5/6 h-auto justify-center p-3 font-mono rounded-lg bg-slate-600 border border-black text-white">
-            <div className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 items-center justify-center gap-3 p-1">
+          <div className="flex flex-col items-center w-full h-auto justify-center p-3 font-mono rounded-lg bg-slate-600 border border-black text-white">
+            <div className="grid grid-cols-1 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 items-center justify-center gap-3 p-1">
               <div className="font-mono font-bold text-sm p-3 bg-black rounded-full">
                 {order.nombre}
               </div>
@@ -85,7 +85,7 @@ export const CocinaOrder = ({ order }) => {
           >
             LISTO
           </button>
-        </>
+        </div>
       ) : (
         <></>
       )}
