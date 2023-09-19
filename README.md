@@ -9,5 +9,5 @@ Currently, two official plugins are available:
 
 # Al ejecutar
 Utilizamos la ip de la maquina local:
-vite --host 192....
+<strong>vite --host 192....</strong>
 
