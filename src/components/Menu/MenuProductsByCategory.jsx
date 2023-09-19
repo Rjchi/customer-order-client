@@ -25,27 +25,27 @@ export const MenuProductsByCategory = ({ category, products }) => {
           {
             <>
               <Menu.Button
-                className="flex flex-row w-full font-mono tracking-widest h-14 justify-between items-center rounded-xl bg-slate-500 px-11 py-10 text-xl font-bold text-white hover:bg-slate-600 outline-none ring-1 ring-black ring-opacity-75 shadow-lg shadow-black"
+                className="flex flex-row w-full font-mono tracking-widest h-14 justify-between items-center rounded-xl bg-slate-500 px-11 py-10 text-base 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl sm:text-xl font-bold text-white hover:bg-slate-600 outline-none ring-1 ring-black ring-opacity-75 shadow-lg shadow-black"
                 onClick={() => setMenuOpen(!menuOpen)}
               >
                 {category === "BEBIDAS CALIENTES" ? (
-                  <i>
+                  <i className="p-1 mr-1 2xl:p-4 xl:p-4 lg:p-4 md:p-4 sm:p-2 border border-black bg-white">
                     <BsFillCupHotFill className="text-3xl text-amber-400" />
                   </i>
                 ) : category === "BEBIDAS FRIAS" ? (
-                  <i>
+                  <i className="p-1 mr-1 2xl:p-4 xl:p-4 lg:p-4 md:p-4 sm:p-2 border border-black bg-white">
                     <MdLocalDrink className="text-3xl text-blue-600" />
                   </i>
                 ) : category === "ACOMPAÑANTES" ? (
-                  <i>
+                  <i className="p-1 mr-1 2xl:p-4 xl:p-4 lg:p-4 md:p-4 sm:p-2 border border-black bg-white">
                     <PiBowlFoodFill className="text-3xl text-amber-800" />
                   </i>
                 ) : category === "ADICIONES" ? (
-                  <i>
+                  <i className="p-1 mr-1 2xl:p-4 xl:p-4 lg:p-4 md:p-4 sm:p-2 border border-black bg-white">
                     <GiChipsBag className="text-3xl text-purple-900" />
                   </i>
                 ) : (
-                  <i>
+                  <i className="p-4 bg-white">
                     <MdFastfood className="text-3xl text-rose-600" />
                   </i>
                 )}
