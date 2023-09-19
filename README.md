@@ -8,6 +8,6 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 # Al ejecutar
-Utilizamos la ip de la maquina local:
+Utilizamos la ip de la maquina local desde el archivo env:
 <strong>vite --host 192....</strong>
 
