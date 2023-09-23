@@ -9,6 +9,7 @@ import {
   getOrdersNotCheckRequest,
   updateCheckRequest,
 } from "../api/pedidos.api";
+import { logueoRequest,registroRequest } from "../api/inicioSecion.api";
 import { createContext, useContext } from "react";
 
 export const PedidoContext = createContext();
@@ -150,6 +151,23 @@ export const PedidoContextProvider = ({ children }) => {
     }
   };
 
+  const logueo = async (user) => {
+    try {
+      const response = await logueoRequest(user);
+      return response.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const register = async (user) => {
+    try {
+      const response = await registroRequest(user);
+      return response.status;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PedidoContext.Provider
       value={{
@@ -166,6 +184,8 @@ export const PedidoContextProvider = ({ children }) => {
         deleteOrdersByTable,
         getOrdersNotCheck,
         updateCheck,
+        logueo,
+        register,
       }}
     >
       {children}
