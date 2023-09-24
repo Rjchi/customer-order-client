@@ -29,11 +29,11 @@ export const Login = () => {
 
   return (
     <div className="flex flex-col space-y-20">
-      <div className="w-full h-20 fixed top-0 left-0 z-30 rounded-b-xl">
+      <div className="w-full fixed top-0 left-0 z-30 shadow-2xl max-w-screen-lg">
         <NavBar/>
       </div>
       <div>
-        <div className="rounded-xl bg-gray-800 bg-opacity-50 px-8 py-5 sm:px-16 sm:py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+        <div className="rounded-xl bg-gray-950 bg-opacity-50 px-8 py-5 sm:px-16 sm:py-10 shadow-lg backdrop-blur-md max-sm:px-8">
           <div className="text-white">
             <div className="mb-8 flex flex-col items-center">
               <img

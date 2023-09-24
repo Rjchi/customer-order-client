@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <nav
-      className="flex justify-center  bg-gray-800 bg-opacity-50 shadow-lg backdrop-blur-md"
+      className="flex justify-center bg-black bg-opacity-80 border border-blue-950 shadow-lg backdrop-blur-md font-mono font-bold "
     >
       <div className="w-full flex items-center justify-between mt-0 px-6 py-2">
         <label htmlFor="menu-toggle" className="cursor-pointer md:hidden block">
@@ -26,13 +26,13 @@ const NavBar = () => {
         >
           <nav>
             <ul className="flex items-center justify-between space-x-3 text-base text-blue-600 pt-4 md:pt-0">
-              <li>
+              <li className="hover:text-gray-50">
                 <Link to={`/cocina`}>Cocina</Link>
               </li>
-              <li>
+              <li className="hover:text-gray-50">
                 <Link to={`/`}>Cliente</Link>
               </li>
-              <li>
+              <li className="hover:text-gray-50"> 
                 <Link to={`/caja`}>Caja</Link>
               </li>
             </ul>
