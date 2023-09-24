@@ -59,6 +59,7 @@ export const PedidoContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
