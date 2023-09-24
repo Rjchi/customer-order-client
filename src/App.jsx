@@ -6,6 +6,7 @@ import Cocina from "./pages/Cocina";
 import { Caja } from "./pages/Caja";
 import { Menu } from "./pages/Menu";
 import { Login } from "./pages/Login";
+import { Cliente } from "./pages/Cliente";
 import { NotFound } from "./pages/NotFound";
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
     <div className="container mx-auto my-auto p-4 h-auto w-full flex flex-col items-center justify-center">
       <PedidoContextProvider>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Cliente />} />
 
           <Route path="/menu" element={<Menu />} />
 
