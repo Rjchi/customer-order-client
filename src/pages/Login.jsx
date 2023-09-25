@@ -28,7 +28,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex flex-col  space-y-20">
+    <div className="flex flex-col space-y-20">
       <NavBar/>
       <div>
         <div className="rounded-xl bg-gray-950 bg-opacity-50 px-8 py-5 sm:px-16 sm:py-10 shadow-lg backdrop-blur-md max-sm:px-8">
