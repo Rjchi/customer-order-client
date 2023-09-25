@@ -28,20 +28,17 @@ export const Login = () => {
   };
 
   return (
-    <div className="flex flex-col  space-y-20">
-      <div className="w-full fixed top-0 left-0 z-30 lg:grid lg:grid-cols-10 ">
-        <div className="col-span-8 col-start-2" >
-          <NavBar/>
-        </div>
-      </div>
+    <div className="flex flex-col space-y-20">
+      {/* el navbar contiene un z-30 */}
+      <NavBar/>
       <div>
         <div className="rounded-xl bg-gray-950 bg-opacity-50 px-8 py-5 sm:px-16 sm:py-10 shadow-lg backdrop-blur-md max-sm:px-8">
-          <div className="text-white">
+          <div className="text-black">
             <div className="mb-8 flex flex-col items-center">
               <img
                 src="../../public/Cafe-magico.png"
                 width="150"
-                alt="Descripción de la imagen"
+                alt="logo cafe magico"
               />
               <span className="text-gray-200">
                 Ingrese los detalles de inicio de sesión
