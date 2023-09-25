@@ -1,12 +1,11 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
 import { PedidoContextProvider } from "./context/PedidoCotext";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import Cocina from "./pages/Cocina";
 import { Caja } from "./pages/Caja";
 import { Menu } from "./pages/Menu";
 import { Login } from "./pages/Login";
-import { Cliente } from "./pages/Cliente";
 import { NotFound } from "./pages/NotFound";
 
 function App() {
@@ -15,7 +14,8 @@ function App() {
       <PedidoContextProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Cliente />} />
+
+          <Route path="/" element={<Navigate to={`/menu`} />} />
 
           <Route path="/menu" element={<Menu />} />
 

@@ -12,6 +12,7 @@ export const MenuProductCard = ({ product }) => {
     cantidad: "",
     mesa: "",
     precio: "",
+    ped_usu_mesero_doc: null
   });
 
   const { cantidad, mesa } = producto;
@@ -89,6 +90,7 @@ export const MenuProductCard = ({ product }) => {
           cantidad: "",
           mesa: "",
           precio: "",
+          ped_usu_mesero_doc: null
         });
         console.log(producto);
         setOpen(false);
