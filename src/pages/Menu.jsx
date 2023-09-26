@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+
+import NavBar from '../components/Navegation/NavBar';
 import { Spinner } from "../components/utils/Spinner";
 import { useOrders } from "../context/PedidoCotext";
-import { useEffect, useState } from "react";
 import { MenuProductsByCategory } from "../components/Menu/MenuProductsByCategory";
 
 export const Menu = () => {
@@ -28,6 +30,7 @@ export const Menu = () => {
 
     return (
       <div className="mt-11 2xl:mt-52 xl:mt-32 w-full h-full flex flex-col items-center justify-center">
+        <NavBar />
         {productsByCategory.map((product) => (
           <MenuProductsByCategory
             key={product.id_categoria}

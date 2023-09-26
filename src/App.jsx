@@ -13,7 +13,6 @@ function App() {
     <div className="container mx-auto my-auto p-4 h-auto w-full flex flex-col items-center justify-center">
       <PedidoContextProvider>
         <Routes>
-          <Route path="/login" element={<Login />} />
 
           <Route path="/" element={<Navigate to={`/menu`} />} />
 
@@ -21,6 +20,8 @@ function App() {
 
           <Route path="/cocina" element={<Cocina />} />
           <Route path="/caja" element={<Caja />} />
+          
+          <Route path="/login" element={<Login />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>
