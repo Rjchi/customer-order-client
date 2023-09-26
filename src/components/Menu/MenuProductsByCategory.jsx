@@ -25,7 +25,7 @@ export const MenuProductsByCategory = ({ category, products }) => {
           {
             <>
               <Menu.Button
-                className="flex flex-row w-full font-mono tracking-widest h-14 justify-between items-center rounded-xl bg-slate-500 px-11 py-10 text-base 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl sm:text-xl font-bold text-white hover:bg-slate-600 outline-none ring-1 ring-black ring-opacity-75 shadow-lg shadow-black"
+                className="flex flex-row w-full font-mono tracking-widest h-14 justify-between items-center rounded-sm bg-blue-500 px-11 py-10 text-base 2xl:text-3xl xl:text-3xl lg:text-2xl md:text-xl sm:text-xl font-bold text-white hover:bg-blue-800 outline-none ring-1 ring-black ring-opacity-75 shadow-lg shadow-black "
                 onClick={() => setMenuOpen(!menuOpen)}
               >
                 {category === "BEBIDAS CALIENTES" ? (
@@ -78,9 +78,9 @@ export const MenuProductsByCategory = ({ category, products }) => {
                       !active ? "h-auto" : "h-20 duration"
                     } origin-top-right divide-y divide-black rounded-md bg-white shadow-lg shadow-black ring-2 ring-black ring-opacity-5 focus:outline-none`}
                   >
-                    <div className="px-3 py-4 bg-slate-200">
+                    <div className="px-3 py-4 bg-white">
                       <Menu.Item
-                        className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 justify-center gap-3 items-center w-full h-full bg-slate-200"
+                        className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 justify-center gap-3 items-center w-full h-full bg-white"
                         as="div"
                       >
                         {products.map((product) => (
