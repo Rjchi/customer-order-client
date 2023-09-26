@@ -1,8 +1,17 @@
 import { Link } from "react-router-dom";
+import { useOrders } from "../context/PedidoCotext";
 
 export const NotFound = () => {
+  const { getUserLogged } = useOrders();
+
+  const va = async () => {
+    const response = await getUserLogged();
+    console.log(response);
+  };
+
   return (
     <div className="h-full w-full flex flex-col items-center justify-center gap-6">
+      <button onClick={() => va()}>PPPPPPPP</button>
       <p className="text-9xl text-white font-bold text-center">404</p>
       <p className="text-5xl text-slate-300 font-bold text-center">
         Página no encontrada

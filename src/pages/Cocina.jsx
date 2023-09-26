@@ -44,7 +44,12 @@ const Cocina = () => {
   }, [pedidos, socket, getOrdersNotCheck]);
 
   if (pedidos.length === 0) {
-    return <Spinner />;
+    return (
+      <>
+        <NavBar />
+        <Spinner />;
+      </>
+    );
   } else {
     const ordersByTable = Object.values(getOrderByTable(pedidos));
     console.log(ordersByTable);

@@ -13,7 +13,7 @@ export const CajaPayPerTable = ({ table, orders, total }) => {
     setAnterior(orders[0].id);
     const res = await deleteOrdersByTable(table);
     if (res === 200) {
-      // console.log("200")
+      // console.log(res);
       socket.emit("recargaPedidos");
     }
   };
@@ -22,6 +22,7 @@ export const CajaPayPerTable = ({ table, orders, total }) => {
       setMostrarPedidos(true);
     }
   }, [deleteOrdersByTable, table, anterior, orders]);
+
   if (orders && orders.length > 0) {
     return (
       <>

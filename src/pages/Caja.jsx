@@ -15,7 +15,7 @@ export const Caja = () => {
 
     const loadOrders = async () => {
       const response = await getOrders();
-      if (response.length !== 0) {
+      if (response && response.length !== 0) {
         setPedidos(response);
       }
     };
@@ -30,6 +30,7 @@ export const Caja = () => {
     });
 
     socket.on("recargaPedidosCaja", () => {
+      setPedidos([]);
       loadOrders();
     });
 
@@ -50,10 +51,15 @@ export const Caja = () => {
 
   if (pedidos.length === 0) {
     // socket.emit("recargaPedidos");
-    return <Spinner />;
+    return (
+      <>
+        <NavBar />
+        <Spinner />;
+      </>
+    );
   } else {
     const ordersByTable = Object.values(getOrderByTable(pedidos));
-    console.log(ordersByTable);
+    // console.log(ordersByTable);
 
     return (
       <>

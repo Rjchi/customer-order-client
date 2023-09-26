@@ -9,7 +9,8 @@ import {
   getOrdersNotCheckRequest,
   updateCheckRequest,
 } from "../api/pedidos.api";
-import { logueoRequest,registroRequest } from "../api/inicioSecion.api";
+import { validateCookieRequest } from "../api/validate.api";
+import { logueoRequest, registroRequest } from "../api/inicioSecion.api";
 import { createContext, useContext } from "react";
 
 export const PedidoContext = createContext();
@@ -155,9 +156,13 @@ export const PedidoContextProvider = ({ children }) => {
   const logueo = async (user) => {
     try {
       const response = await logueoRequest(user);
-      return response.status;
+      if (response.data) {
+        return true;
+      }
+      return false;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      return false;
     }
   };
   const register = async (user) => {
@@ -166,6 +171,15 @@ export const PedidoContextProvider = ({ children }) => {
       return response.status;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getUserLogged = async () => {
+    try {
+      const response = await validateCookieRequest();
+      return response.data;
+    } catch (error) {
+      console.log(`Error al validar la cookie: ${error.message}`);
     }
   };
 
@@ -187,6 +201,7 @@ export const PedidoContextProvider = ({ children }) => {
         updateCheck,
         logueo,
         register,
+        getUserLogged,
       }}
     >
       {children}

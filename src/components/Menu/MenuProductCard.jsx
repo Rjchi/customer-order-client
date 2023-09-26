@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const MenuProductCard = ({ product }) => {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { socket, createOrder } = useOrders();
   const [producto, setProducto] = useState({
@@ -12,7 +13,7 @@ export const MenuProductCard = ({ product }) => {
     cantidad: "",
     mesa: "",
     precio: "",
-    ped_usu_mesero_doc: null
+    ped_usu_mesero_doc: null,
   });
 
   const { cantidad, mesa } = producto;
@@ -82,6 +83,7 @@ export const MenuProductCard = ({ product }) => {
         setErr(false);
       }, 2000);
     } else if (!Number.isNaN(Number(cantidad)) && !Number.isNaN(Number(mesa))) {
+      setLoading(true);
       const response = await createOrder(producto);
       if (response === 204) {
         socket.emit("nuevoPedido");
@@ -90,11 +92,13 @@ export const MenuProductCard = ({ product }) => {
           cantidad: "",
           mesa: "",
           precio: "",
-          ped_usu_mesero_doc: null
+          ped_usu_mesero_doc: null,
         });
         console.log(producto);
+        setLoading(false);
         setOpen(false);
       }
+      setLoading(false);
     } else {
       navigate(0);
     }
@@ -206,15 +210,24 @@ export const MenuProductCard = ({ product }) => {
                 </div>
               </div>
               <div className=" w-full h-24 rounded-lg flex flex-row items-center justify-around bg-gray-400 border-t border-solid border-black p-0">
-                <button
-                  className="p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-600 hover:text-white ease-out duration-1000"
-                  type="submit"
-                >
-                  Hacer Pedido
-                </button>
+                {loading ? (
+                  <button
+                    className="p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-600 hover:text-white ease-out duration-1000"
+                    type={`button`}
+                  >
+                    Hacer Pedido
+                  </button>
+                ) : (
+                  <button
+                    className="p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-600 hover:text-white ease-out duration-1000"
+                    type={`submit`}
+                  >
+                    Hacer Pedido
+                  </button>
+                )}
                 <div
                   onClick={() => {
-                    setOpen(!open)
+                    setOpen(!open);
                   }}
                   className=" cursor-pointer p-3 rounded-sm text-white shadow-sm border border-solid border-black shadow-black bg-rose-500 font-mono font-bold hover:bg-rose-600 hover:text-white ease-out duration-1000"
                 >
