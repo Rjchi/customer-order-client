@@ -29,7 +29,7 @@ export const Menu = () => {
     const productsByCategory = Object.values(getProByCate(products));
 
     return (
-      <div className="mt-11 2xl:mt-52 xl:mt-32 w-full h-full flex flex-col items-center justify-center">
+      <div className="mt-16 2xl:mt-52 xl:mt-32 lg:mt-20 md:mt-20 sm:mt-20 w-full h-full flex flex-col items-center justify-center">
         <NavBar />
         {productsByCategory.map((product) => (
           <MenuProductsByCategory
