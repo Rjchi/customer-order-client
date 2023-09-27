@@ -19,7 +19,7 @@ export const MenuProductsByCategory = ({ category, products }) => {
       if (contador === 4) {
         contador = 0;
       }
-      const colores = ["bg-green-500", "bg-blue-500", "bg-pink-500", "bg-yellow-400"];
+      const colores = ["bg-green-500 hover:bg-green-800", "bg-blue-500 hover:bg-blue-800", "bg-pink-500 hover:bg-pink-800", "bg-yellow-400 hover:bg-yellow-700"];
       const colorAleatorio = colores[contador];
       contador++;
       return colorAleatorio;

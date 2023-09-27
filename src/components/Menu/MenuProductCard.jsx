@@ -108,7 +108,7 @@ export const MenuProductCard = ({ product, colorAleatorio }) => {
   };
   console.log(colorAleatorio);
   return (
-    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} rounded-lg shadow-md shadow-black hover:bg-amber-700 transform-colors ease-out duration-300`}>
+    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} rounded-lg shadow-md shadow-black transform-colors ease-out duration-300`}>
       <div className=" flex flex-col items-center justify-center text-center gap-1">
         {open ? (
           <div
