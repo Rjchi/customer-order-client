@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useOrders } from "../../context/PedidoCotext";
 import { useNavigate } from "react-router-dom";
 
-export const MenuProductCard = ({ product }) => {
+export const MenuProductCard = ({ product, colorAleatorio }) => {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -106,20 +106,9 @@ export const MenuProductCard = ({ product }) => {
       navigate(0);
     }
   };
-  // 2890E9
-  // E0296A
-  // 51AB55
-  // FD9912
-  // Declara una variable global para mantener el contador
-  let contador = 0;
-
-  // Define la función que se incrementará cada vez que se llame
-  function incrementarContador() {
-    contador++;
-  }
-
+  console.log(colorAleatorio);
   return (
-    <div className="cursor-pointer w-full h-auto bg-[] rounded-lg shadow-md shadow-black hover:bg-amber-700 transform-colors ease-out duration-300">
+    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} rounded-lg shadow-md shadow-black hover:bg-amber-700 transform-colors ease-out duration-300`}>
       <div className=" flex flex-col items-center justify-center text-center gap-1">
         {open ? (
           <div

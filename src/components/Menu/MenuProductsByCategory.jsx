@@ -14,6 +14,16 @@ export const MenuProductsByCategory = ({ category, products }) => {
   if (products.length === 0 || category === undefined || category === null) {
     return <Spinner />;
   } else {
+    let contador = 0;
+    function votarColorAleatorio() {
+      if (contador === 4) {
+        contador = 0;
+      }
+      const colores = ["bg-green-500", "bg-blue-500", "bg-pink-500", "bg-yellow-400"];
+      const colorAleatorio = colores[contador];
+      contador++;
+      return colorAleatorio;
+    }
     return (
       <div
         className={`flex flex-col justify-items-center items-center h-full w-full`}
@@ -87,6 +97,7 @@ export const MenuProductsByCategory = ({ category, products }) => {
                           <MenuProductCard
                             key={product.id_producto}
                             product={product}
+                            colorAleatorio={votarColorAleatorio()}
                           />
                         ))}
                       </Menu.Item>
