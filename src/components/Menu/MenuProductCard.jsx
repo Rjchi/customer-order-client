@@ -106,13 +106,12 @@ export const MenuProductCard = ({ product, colorAleatorio }) => {
       navigate(0);
     }
   };
-  console.log(colorAleatorio);
   return (
-    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} rounded-lg shadow-md shadow-black transform-colors ease-out duration-300`}>
+    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} text-white rounded-lg shadow-md shadow-black transform-colors ease-out duration-300`}>
       <div className=" flex flex-col items-center justify-center text-center gap-1">
         {open ? (
           <div
-            className={`absolute z-10 top-0 left-0 w-full h-full bg-slate-300 bg-opacity-70 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1`}
+            className={`absolute z-10 top-0 text-black  left-0 w-full h-full bg-slate-300 bg-opacity-70 flex flex-col items-center justify-start pt-20 xl:pt-1 xl:pb-1`}
           >
             <form
               className="flex flex-col bg-white w-4/6 h-64 rounded-lg items-center justify-center shadow-lg shadow-black border border-solid border-black p-0"
@@ -265,16 +264,19 @@ export const MenuProductCard = ({ product, colorAleatorio }) => {
             </div>
             <h1
               onClick={() => setOpen(!open)}
-              className={`font-bold text-lg text-black font-mono hover:text-amber-300 transform-colors ease-out duration-200`}
+              className={`font-bold text-lg  font-mono hover:text-3xl hover:p-8 transform-colors ease-out duration-200 w-2/3`}
             >
               {product.nombre_producto}
             </h1>
-            <p
+              <p
               onClick={() => setOpen(!open)}
-              className={`font-bold text-base font-serif textblack mb-3 shadow-sm shadow-black hover:text-amber-300 transform-colors ease-out duration-200`}
-            >
+              className="font-extrabold font-mono border-b-4 text-zinc-500 text-xl">
               $ {product.precio_producto}
-            </p>
+              </p>
+            <div
+              className={`opacity-10 text-xl text- border-b-4 textblack mb-3 transform-colors ease-out duration-600`}
+            >
+            </div>
           </>
         )}
       </div>
