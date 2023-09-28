@@ -15,14 +15,14 @@ export const MenuProductsByCategory = ({ category, products }) => {
     return <Spinner />;
   } else {
     let contador = 0;
-    function votarColorAleatorio() {
+    function colorIntercalado() {
       if (contador === 4) {
         contador = 0;
       }
-      const colores = ["bg-green-500 hover:bg-green-600 shadow-lg shadow-green-400", "bg-blue-500 hover:bg-blue-800 shadow-lg shadow-blue-800", "bg-pink-500 hover:bg-pink-800 shadow-lg shadow-pink-400", "bg-yellow-400 hover:bg-yellow-600 shadow-lg shadow-yellow-800"];
-      const colorAleatorio = colores[contador];
+      const colores = ["bg-green-500 hover:bg-green-600", "bg-blue-500 hover:bg-blue-800", "bg-pink-500 hover:bg-pink-800", "bg-yellow-400 hover:bg-yellow-600"];
+      const colorIntercalado = colores[contador];
       contador++;
-      return colorAleatorio;
+      return colorIntercalado;
     }
     return (
       <div
@@ -97,7 +97,7 @@ export const MenuProductsByCategory = ({ category, products }) => {
                           <MenuProductCard
                             key={product.id_producto}
                             product={product}
-                            colorAleatorio={votarColorAleatorio()}
+                            colorIntercalado={colorIntercalado()}
                           />
                         ))}
                       </Menu.Item>

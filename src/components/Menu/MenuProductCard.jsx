@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useOrders } from "../../context/PedidoCotext";
 import { useNavigate } from "react-router-dom";
 
-export const MenuProductCard = ({ product, colorAleatorio }) => {
+export const MenuProductCard = ({ product, colorIntercalado }) => {
   const [open, setOpen] = useState(false);
   const [err, setErr] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -107,7 +107,7 @@ export const MenuProductCard = ({ product, colorAleatorio }) => {
     }
   };
   return (
-    <div className={`cursor-pointer w-full h-auto ${colorAleatorio} text-white rounded-lg transform-colors ease-out duration-300`}>
+    <div className={`cursor-pointer w-full h-auto ${colorIntercalado} shadow-lg shadow-zinc-800 text-white rounded-lg transform-colors ease-out duration-300`}>
       <div className=" flex flex-col items-center justify-center text-center gap-1">
         {open ? (
           <div
@@ -262,12 +262,13 @@ export const MenuProductCard = ({ product, colorAleatorio }) => {
                 />
               </div>
             </div>
-            <h1
+            <h2
               onClick={() => setOpen(!open)}
-              className={`font-bold text-lg  font-mono hover:text-3xl hover:p-8 transform-colors ease-out duration-200 w-2/3`}
+              className={`font-bold text-lg  font-mono hover:text-3xl hover:p-8 hover:w-full transform-colors ease-out duration-200 w-2/3`}
             >
               {product.nombre_producto}
-            </h1>
+            </h2>
+
               <p
               onClick={() => setOpen(!open)}
               className="font-extrabold font-mono border-b-4 text-zinc-500 text-xl">
