@@ -157,6 +157,8 @@ export const PedidoContextProvider = ({ children }) => {
     try {
       const response = await logueoRequest(user);
       if (response.data) {
+        const sessionData = response.data.sessionData.idSesion;
+        sessionStorage.setItem('sessionId', sessionData);
         return true;
       }
       return false;

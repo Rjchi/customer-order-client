@@ -44,9 +44,10 @@ export const Login = () => {
     if (documento.length !== 0 && contrasenia.length !== 0) {
       const res = await logueo(datosObj);
       setLogged(res);
-      if (res) {
-        navigate(`/sdf`)
-      }
+      console.log(res)
+      // if (res) {
+      //   navigate(`/sdf`)
+      // }
     } else {
       /**----------------------------------------------
        * | Esta vacio mostrar error en los inputs
