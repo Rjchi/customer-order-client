@@ -10,7 +10,7 @@ import {
   updateCheckRequest,
 } from "../api/pedidos.api";
 import { validateCookieRequest } from "../api/validate.api";
-import { logueoRequest, registroRequest } from "../api/inicioSecion.api";
+import { logueoRequest, registroRequest, logout } from "../api/inicioSecion.api";
 import { createContext, useContext } from "react";
 
 export const PedidoContext = createContext();

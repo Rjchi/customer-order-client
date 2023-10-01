@@ -7,3 +7,6 @@ export const logueoRequest = async (user) =>
 
 export const registroRequest = async (user) =>
   await axios.post(`${API}/api/registro`, user);
+
+export const logout = async () =>
+  await axios.post(`${API}/api/logout`);
