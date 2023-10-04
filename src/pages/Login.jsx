@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useOrders } from "../context/PedidoCotext";
 import hooks from "../hooks/useFunctions";
@@ -6,6 +7,7 @@ import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
   const context = useOrders();
+  const navigate = useNavigate();
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
 
@@ -35,8 +37,17 @@ export const Login = () => {
       const response = await context.logueo(datosObj);
 
       if (response) {
-        const token = hooks.useDecodedToken(context.currentToken);
+        const token = hooks.useDecodedToken(response);
         console.log(token);
+        if (token.user.usu_rol === "Mesero") {
+          navigate(`/menu`);
+        } else if (token.user.usu_rol === "Cocinero") {
+          navigate(`/cocina`);
+        } else if (token.user.usu_rol === "Cajero") {
+          navigate(`/cajero`);
+        } else {
+          navigate(`/menu`);
+        }
       }
     } else {
       /**----------------------------------------------

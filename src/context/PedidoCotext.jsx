@@ -10,10 +10,13 @@ export const PedidoContextProvider = ({ children }) => {
   const API = import.meta.env.VITE_API_URL;
   const socket = io(`${API}`);
 
-  const [currentToken, setCurrentToken] = useState(null);
+  const [token, setToken] = useState(null);
+
+  let currentToken = null;
 
   const setAuthToken = (newToken) => {
-    setCurrentToken(newToken);
+    // setCurrentToken(newToken);
+    return currentToken = newToken;
   };
 
   const getProByCate = (products) => {
@@ -128,14 +131,17 @@ export const PedidoContextProvider = ({ children }) => {
 
   const logueo = async (user) => {
     try {
+      setToken(null)
+      setAuthToken(null);
       const response = await inicioSesion.logueoRequest(user);
       if (response && response.data) {
         if (response.data && response.data.token) {
-          setAuthToken(response.data.token);
-          console.log("CURRENT TOKEN; ", currentToken);
-          return true;
+          const token = setAuthToken(response.data.token);
+          setToken(token);
+          console.log("CURRENT TOKEN GG; ", currentToken);
+          return token;
         } else {
-          console.log("CURRENT TOKEN; ", currentToken);
+          console.log("CURRENT TOKEN MAL; ", currentToken);
           return false;
         }
       }
@@ -170,8 +176,8 @@ export const PedidoContextProvider = ({ children }) => {
         getOrdersNotCheck,
         updateCheck,
         logueo,
+        token,
         register,
-        currentToken,
         setAuthToken,
       }}
     >
