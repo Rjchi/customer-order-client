@@ -1,17 +1,8 @@
 import io from "socket.io-client";
-import {
-  createOrderRequest,
-  getProductsRequest,
-  getOrdersRequest,
-  deleteOrdersRequest,
-  deleteOrderRequest,
-  deleteOrderByTableRequest,
-  getOrdersNotCheckRequest,
-  updateCheckRequest,
-} from "../api/pedidos.api";
-import { validateCookieRequest } from "../api/validate.api";
-import { logueoRequest, registroRequest, logout } from "../api/inicioSecion.api";
 import { createContext, useContext } from "react";
+
+import pedidos from "../api/pedidos.api";
+import inicioSesion from "../api/inicioSecion.api";
 
 export const PedidoContext = createContext();
 
@@ -54,7 +45,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const getProducts = async () => {
     try {
-      const response = await getProductsRequest();
+      const response = await pedidos.getProductsRequest();
       if (response.status !== 204) {
         return response.data;
       }
@@ -66,7 +57,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const updateCheck = async (id) => {
     try {
-      const response = await updateCheckRequest(id);
+      const response = await pedidos.updateCheckRequest(id);
       return response.status;
     } catch (error) {
       console.log(error);
@@ -75,7 +66,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const getOrders = async () => {
     try {
-      const response = await getOrdersRequest();
+      const response = await pedidos.getOrdersRequest();
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -84,40 +75,16 @@ export const PedidoContextProvider = ({ children }) => {
 
   const getOrdersNotCheck = async () => {
     try {
-      const response = await getOrdersNotCheckRequest();
+      const response = await pedidos.getOrdersNotCheckRequest();
       return response.data;
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const getCategories = async () => {
-    try {
-      const response = await getCategoriesRequest();
-      if (response.status === 200) {
-        return response.data;
-      }
-      return "error";
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getOrdersByTable = async (table) => {
-    try {
-      const response = await getOrderByTableRequest(table);
-      if (response.status === 200) {
-        return response.data;
-      }
-      return "error";
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const createOrder = async (order) => {
     try {
-      const response = await createOrderRequest(order);
+      const response = await pedidos.createOrderRequest(order);
       return response.status;
     } catch (error) {
       console.log(error);
@@ -126,7 +93,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const deleteOrders = async () => {
     try {
-      const response = await deleteOrdersRequest();
+      const response = await pedidos.deleteOrdersRequest();
       return response.status;
     } catch (error) {
       console.log(`Error al eliminar pedidos detalles: ${error.message}`);
@@ -135,7 +102,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const deleteOrder = async (id) => {
     try {
-      const response = await deleteOrderRequest(id);
+      const response = await pedidos.deleteOrderRequest(id);
       return response.status;
     } catch (error) {
       console.log(`Error al eliminar pedido detalles: ${error.message}`);
@@ -144,7 +111,7 @@ export const PedidoContextProvider = ({ children }) => {
 
   const deleteOrdersByTable = async (table) => {
     try {
-      const response = await deleteOrderByTableRequest(table);
+      const response = await pedidos.deleteOrderByTableRequest(table);
       return response.status;
     } catch (error) {
       console.log(
@@ -155,10 +122,8 @@ export const PedidoContextProvider = ({ children }) => {
 
   const logueo = async (user) => {
     try {
-      const response = await logueoRequest(user);
+      const response = await inicioSesion.logueoRequest(user);
       if (response.data) {
-        const sessionData = response.data.sessionData.idSesion;
-        sessionStorage.setItem('sessionId', sessionData);
         return true;
       }
       return false;
@@ -167,21 +132,13 @@ export const PedidoContextProvider = ({ children }) => {
       return false;
     }
   };
+
   const register = async (user) => {
     try {
-      const response = await registroRequest(user);
+      const response = await inicioSesion.registroRequest(user);
       return response.status;
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const getUserLogged = async () => {
-    try {
-      const response = await validateCookieRequest();
-      return response.data;
-    } catch (error) {
-      console.log(`Error al validar la cookie: ${error.message}`);
     }
   };
 
@@ -191,9 +148,7 @@ export const PedidoContextProvider = ({ children }) => {
         socket,
         createOrder,
         getProducts,
-        getCategories,
         getProByCate,
-        getOrdersByTable,
         getOrders,
         getOrderByTable,
         deleteOrders,
@@ -203,7 +158,6 @@ export const PedidoContextProvider = ({ children }) => {
         updateCheck,
         logueo,
         register,
-        getUserLogged,
       }}
     >
       {children}

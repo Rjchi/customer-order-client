@@ -1,29 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
-  const { logueo, getUserLogged } = useOrders();
-  const navigate = useNavigate();
   // Estados para los valores de los inputs
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
-  const [logged, setLogged] = useState(false);
-
-  // useEffect(() => {
-  //     console.log(logged);
-  //   const validateCookie = async () => {
-  //     const userLogged = await getUserLogged();
-  //     console.log(userLogged);
-  //   }
-
-  //   if (logged) {
-  //     validateCookie();
-  //   }
-
-  // }, [logged, navigate, getUserLogged]);
 
   // Manejar cambios en los inputs
   const handleDocumentoChange = (e) => {
@@ -42,12 +24,9 @@ export const Login = () => {
       contrasenia,
     };
     if (documento.length !== 0 && contrasenia.length !== 0) {
-      const res = await logueo(datosObj);
-      setLogged(res);
-      console.log(res)
-      // if (res) {
-      //   navigate(`/sdf`)
-      // }
+      /**--------------------
+       * | Consumir enpoint
+       * --------------------*/
     } else {
       /**----------------------------------------------
        * | Esta vacio mostrar error en los inputs
