@@ -1,9 +1,11 @@
 import { useState } from "react";
 
+import { useOrders } from "../context/PedidoCotext";
+import hooks from "../hooks/useFunctions";
 import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
-  // Estados para los valores de los inputs
+  const context = useOrders();
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
 
@@ -23,10 +25,19 @@ export const Login = () => {
       documento,
       contrasenia,
     };
-    if (documento.length !== 0 && contrasenia.length !== 0) {
-      /**--------------------
-       * | Consumir enpoint
-       * --------------------*/
+
+    if (
+      documento &&
+      contrasenia &&
+      documento.length !== 0 &&
+      contrasenia.length !== 0
+    ) {
+      const response = await context.logueo(datosObj);
+
+      if (response) {
+        const token = hooks.useDecodedToken(context.currentToken);
+        console.log(token);
+      }
     } else {
       /**----------------------------------------------
        * | Esta vacio mostrar error en los inputs

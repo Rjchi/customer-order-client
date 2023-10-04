@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 import pedidos from "../api/pedidos.api";
 import inicioSesion from "../api/inicioSecion.api";
@@ -9,6 +9,12 @@ export const PedidoContext = createContext();
 export const PedidoContextProvider = ({ children }) => {
   const API = import.meta.env.VITE_API_URL;
   const socket = io(`${API}`);
+
+  const [currentToken, setCurrentToken] = useState(null);
+
+  const setAuthToken = (newToken) => {
+    setCurrentToken(newToken);
+  };
 
   const getProByCate = (products) => {
     const productsByCategory = products.reduce((acc, product) => {
@@ -123,8 +129,15 @@ export const PedidoContextProvider = ({ children }) => {
   const logueo = async (user) => {
     try {
       const response = await inicioSesion.logueoRequest(user);
-      if (response.data) {
-        return true;
+      if (response && response.data) {
+        if (response.data && response.data.token) {
+          setAuthToken(response.data.token);
+          console.log("CURRENT TOKEN; ", currentToken);
+          return true;
+        } else {
+          console.log("CURRENT TOKEN; ", currentToken);
+          return false;
+        }
       }
       return false;
     } catch (error) {
@@ -158,6 +171,8 @@ export const PedidoContextProvider = ({ children }) => {
         updateCheck,
         logueo,
         register,
+        currentToken,
+        setAuthToken,
       }}
     >
       {children}
