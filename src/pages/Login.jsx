@@ -7,6 +7,7 @@ import NavBar from "../components/Navegation/NavBar";
 export const Login = () => {
   const context = useOrders();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
 
@@ -45,6 +46,8 @@ export const Login = () => {
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const datosObj = {
       documento,
       contrasenia,
@@ -67,6 +70,8 @@ export const Login = () => {
        *----------------------------------------------*/
       console.log(JSON.stringify(datosObj));
     }
+
+    setLoading(false);
   };
 
   return (
@@ -111,7 +116,7 @@ export const Login = () => {
               </div>
               <div className="mt-8 flex justify-center text-lg text-black">
                 <button
-                  type="submit"
+                  type={`${!loading ? "submit" : "button"}`}
                   className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
                 >
                   Enviar

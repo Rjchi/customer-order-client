@@ -170,16 +170,24 @@ export const PedidoContextProvider = ({ children }) => {
   };
 
   const redirectUser = () => {
-    const token = sessionStorage.getItem("currentToken");
-    const decodedToken = hooks.useDecodedToken(token);
+    try {
+      const token = sessionStorage.getItem("currentToken");
+      const decodedToken = hooks.useDecodedToken(token);
 
-    if (decodedToken.user.usu_rol === "Mesero") {
-      navigate(`/menu`);
-    } else if (decodedToken.user.usu_rol === "Cocinero") {
-      navigate(`/cocina`);
-    } else if (decodedToken.user.usu_rol === "Cajero") {
-      navigate(`/cajero`);
-    } else {
+      if (token && decodedToken) {
+        if (decodedToken.user.usu_rol === "Mesero") {
+          navigate(`/menu`);
+        } else if (decodedToken.user.usu_rol === "Cocinero") {
+          navigate(`/cocina`);
+        } else if (decodedToken.user.usu_rol === "Cajero") {
+          navigate(`/cajero`);
+        } else {
+          navigate(`/menu`);
+        }
+      } else {
+        navigate(`/menu`);
+      }
+    } catch (error) {
       navigate(`/menu`);
     }
   };

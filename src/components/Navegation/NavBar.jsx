@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const navigate = useNavigate();
+
   return (
     // <div className="w-full fixed top-0 left-0 z-30 lg:grid lg:grid-cols-10 ">
     <div className="w-full fixed top-0 left-0 z-30">
@@ -49,7 +50,11 @@ const NavBar = () => {
               id="nav-content"
             >
               <div className="auth flex items-center w-full md:w-full">
-                <button type="button" onClick={() => navigate(`/login`)} className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000">
+                <button
+                  type="button"
+                  onClick={() => navigate(`/login`)}
+                  className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
+                >
                   Iniciar sesion
                 </button>
               </div>

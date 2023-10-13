@@ -1,20 +1,51 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
 import { Spinner } from "../components/utils/Spinner";
-import { useOrders } from "../context/PedidoCotext";
 import { CocinaTable } from "../components/Cocina/CocinaTable";
 
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
-  const { socket, getOrdersNotCheck, getOrderByTable } = useOrders();
+  const navigate = useNavigate();
+  const context = useOrders();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    socket.emit("cocinaConectada");
+
+    /**----------------------------------------------
+     * | Validamos el rol y la validez del token
+     * ----------------------------------------------*/
+    const fetchRole = async () => {
+      if (sessionStorage.getItem("currentToken")) {
+        try {
+          const res = await context.validateToken(
+            sessionStorage.getItem("currentToken")
+          );
+          if (res) {
+            /**----------------------------------------------
+             * | Si el token existe y es valido
+             * | Redireccionamos al usuario segun su rol
+             *  ----------------------------------------------*/
+            context.redirectUser();
+          } else {
+            navigate(`/menu`);
+          }
+        } catch (error) {
+          navigate(`/menu`);
+        }
+      } else {
+        navigate(`/menu`);
+      }
+    };
+
+    fetchRole();
+
+    context.socket.emit("cocinaConectada");
 
     const loadOrders = async () => {
-      const response = await getOrdersNotCheck();
+      const response = await context.getOrdersNotCheck();
       if (response.length !== 0) {
         setPedidos(response);
       }
@@ -24,24 +55,28 @@ const Cocina = () => {
       loadOrders();
     }
 
-    // Escuchar eventos de nuevos pedidos para la cocina
-    socket.on("nuevoPedidoCocina", () => {
+    /**---------------------------------------------------------
+     * | Escuchar eventos de nuevos pedidos para la cocina
+     * ---------------------------------------------------------*/
+    context.socket.on("nuevoPedidoCocina", () => {
       loadOrders();
     });
 
-    socket.on("recargaPedidos", () => {
+    context.socket.on("recargaPedidos", () => {
       setPedidos([]);
       if (pedidos.length === 0) {
         loadOrders();
       }
     });
 
-    // Importante: Limpieza al desmontar el componente
+    /**----------------------------------------
+     * | Limpieza al desmontar el componente
+     * ----------------------------------------*/
     return () => {
-      socket.off("nuevoPedidoCocina");
-      socket.off("recargaPedidos");
+      context.socket.off("nuevoPedidoCocina");
+      context.socket.off("recargaPedidos");
     };
-  }, [pedidos, socket, getOrdersNotCheck]);
+  }, [pedidos, context, navigate]);
 
   if (pedidos.length === 0) {
     return (

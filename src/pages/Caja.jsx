@@ -1,20 +1,54 @@
-import { Spinner } from "../components/utils/Spinner";
-import { useOrders } from "../context/PedidoCotext";
-import { CajaPayPerTable } from "../components/Caja/CajaPayPerTable";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
+import { Spinner } from "../components/utils/Spinner";
+import { CajaPayPerTable } from "../components/Caja/CajaPayPerTable";
 
 export const Caja = () => {
   const [pedidos, setPedidos] = useState([]);
-  const { socket, getOrders, getOrderByTable } = useOrders();
+  const navigate = useNavigate();
+  const context = useOrders();
 
   useEffect(() => {
-    socket.emit("cajaConectada");
-
     window.scrollTo(0, 0);
 
+    /**----------------------------------------------
+     * | Validamos el rol y la validez del token
+     * ----------------------------------------------*/
+    const fetchRole = async () => {
+      if (sessionStorage.getItem("currentToken")) {
+        try {
+          const res = await context.validateToken(
+            sessionStorage.getItem("currentToken")
+          );
+          if (res) {
+            /**----------------------------------------------
+             * | Si el token existe y es valido
+             * | Redireccionamos al usuario segun su rol
+             *  ----------------------------------------------*/
+            context.redirectUser();
+          } else {
+            navigate(`/menu`);
+          }
+        } catch (error) {
+          navigate(`/menu`);
+        }
+      } else {
+        navigate(`/menu`);
+      }
+    };
+
+    fetchRole();
+
+    /**-----------------------------
+     * | Conexión con los pedidos
+     * -----------------------------*/
+    context.socket.emit("cajaConectada");
+
     const loadOrders = async () => {
-      const response = await getOrders();
+      const response = await context.getOrders();
       if (response && response.length !== 0) {
         setPedidos(response);
       }
@@ -24,33 +58,22 @@ export const Caja = () => {
       loadOrders();
     }
 
-    socket.on("nuevoPedidoCocina", () => {
-      console.log("ENTRO");
+    context.socket.on("nuevoPedidoCocina", () => {
       loadOrders();
     });
 
-    socket.on("recargaPedidosCaja", () => {
+    context.socket.on("recargaPedidosCaja", () => {
       setPedidos([]);
       loadOrders();
     });
 
     return () => {
-      socket.off("nuevoPedidoCocina");
-      socket.off("recargaPedidosCaja");
+      context.socket.off("nuevoPedidoCocina");
+      context.socket.off("recargaPedidosCaja");
     };
-  }, [pedidos, socket, getOrders]);
-
-  // const DeleteOrders = async () => {
-  //   setPedidos([]);
-  //   if (pedidos.length !== 0) {
-  //     await deleteOrders();
-  //     setPedidos([]);
-  //   }
-  //   socket.emit("recargaPedidos");
-  // };
+  }, [context, navigate, pedidos]);
 
   if (pedidos.length === 0) {
-    // socket.emit("recargaPedidos");
     return (
       <>
         <NavBar />
@@ -58,12 +81,11 @@ export const Caja = () => {
       </>
     );
   } else {
-    const ordersByTable = Object.values(getOrderByTable(pedidos));
-    // console.log(ordersByTable);
+    const ordersByTable = Object.values(context.getOrderByTable(pedidos));
 
     return (
       <>
-      <NavBar />
+        <NavBar />
         <div className="bg-transparent rounded-xl h-auto w-full py-3 grid grid-cols-1 items-center justify-center mt-11">
           <div className="h-auto w-full bg-transparent">
             <ul className="grid grid-cols-1 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-10">
@@ -78,14 +100,6 @@ export const Caja = () => {
               ))}
             </ul>
           </div>
-          {/* <div className="flex flex-col items-center justify-center mb-5">
-          <button
-            className="bg-rose-600 hover:bg-rose-700 ease-out duration-700 h-12 w-6/12 border border-black p-0 font-mono rounded-lg text-xl font-bold text-white shadow-xl shadow-black"
-            onClick={() => DeleteOrders()}
-          >
-            Eliminar Todos
-          </button>
-        </div> */}
         </div>
       </>
     );
