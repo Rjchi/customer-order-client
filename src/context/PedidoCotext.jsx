@@ -1,7 +1,10 @@
 import io from "socket.io-client";
-import { createContext, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createContext, useContext } from "react";
 
 import pedidos from "../api/pedidos.api";
+import hooks from "../hooks/useFunctions";
+import validate from "../api/validateToken.api";
 import inicioSesion from "../api/inicioSecion.api";
 
 export const PedidoContext = createContext();
@@ -9,15 +12,7 @@ export const PedidoContext = createContext();
 export const PedidoContextProvider = ({ children }) => {
   const API = import.meta.env.VITE_API_URL;
   const socket = io(`${API}`);
-
-  const [token, setToken] = useState(null);
-
-  let currentToken = null;
-
-  const setAuthToken = (newToken) => {
-    // setCurrentToken(newToken);
-    return currentToken = newToken;
-  };
+  const navigate = useNavigate();
 
   const getProByCate = (products) => {
     const productsByCategory = products.reduce((acc, product) => {
@@ -130,24 +125,20 @@ export const PedidoContextProvider = ({ children }) => {
   };
 
   const logueo = async (user) => {
+    sessionStorage.clear();
     try {
-      setToken(null)
-      setAuthToken(null);
       const response = await inicioSesion.logueoRequest(user);
       if (response && response.data) {
         if (response.data && response.data.token) {
-          const token = setAuthToken(response.data.token);
-          setToken(token);
-          console.log("CURRENT TOKEN GG; ", currentToken);
-          return token;
+          const token = response.data.token;
+          sessionStorage.setItem("currentToken", token);
+          return true;
         } else {
-          console.log("CURRENT TOKEN MAL; ", currentToken);
           return false;
         }
       }
       return false;
     } catch (error) {
-      console.log(error.message);
       return false;
     }
   };
@@ -158,6 +149,38 @@ export const PedidoContextProvider = ({ children }) => {
       return response.status;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const validateToken = async (token) => {
+    try {
+      const response = await validate.validateTokenRequest(token);
+      if (response && response.data.token) {
+        sessionStorage.clear();
+        sessionStorage.setItem("currentToken", response.data.token);
+        return true;
+      } else {
+        sessionStorage.clear();
+        return false;
+      }
+    } catch (error) {
+      sessionStorage.clear();
+      return false;
+    }
+  };
+
+  const redirectUser = () => {
+    const token = sessionStorage.getItem("currentToken");
+    const decodedToken = hooks.useDecodedToken(token);
+
+    if (decodedToken.user.usu_rol === "Mesero") {
+      navigate(`/menu`);
+    } else if (decodedToken.user.usu_rol === "Cocinero") {
+      navigate(`/cocina`);
+    } else if (decodedToken.user.usu_rol === "Cajero") {
+      navigate(`/cajero`);
+    } else {
+      navigate(`/menu`);
     }
   };
 
@@ -176,9 +199,9 @@ export const PedidoContextProvider = ({ children }) => {
         getOrdersNotCheck,
         updateCheck,
         logueo,
-        token,
+        validateToken,
         register,
-        setAuthToken,
+        redirectUser,
       }}
     >
       {children}
