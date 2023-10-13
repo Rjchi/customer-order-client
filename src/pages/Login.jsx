@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import { useOrders } from "../context/PedidoCotext";
-import hooks from "../hooks/useFunctions";
 import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
@@ -10,6 +9,29 @@ export const Login = () => {
   const navigate = useNavigate();
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      if (sessionStorage.getItem("currentToken")) {
+        try {
+          const res = await context.validateToken(
+            sessionStorage.getItem("currentToken")
+          );
+          if (res) {
+            /**----------------------------------------------
+             * | Si el token existe y es valido
+             * | Redireccionamos al usuario segun su rol
+             *  ----------------------------------------------*/
+            context.redirectUser();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchRole();
+  }, [context, navigate]);
 
   // Manejar cambios en los inputs
   const handleDocumentoChange = (e) => {
@@ -37,17 +59,7 @@ export const Login = () => {
       const response = await context.logueo(datosObj);
 
       if (response) {
-        const token = hooks.useDecodedToken(response);
-        console.log(token);
-        if (token.user.usu_rol === "Mesero") {
-          navigate(`/menu`);
-        } else if (token.user.usu_rol === "Cocinero") {
-          navigate(`/cocina`);
-        } else if (token.user.usu_rol === "Cajero") {
-          navigate(`/cajero`);
-        } else {
-          navigate(`/menu`);
-        }
+        context.redirectUser();
       }
     } else {
       /**----------------------------------------------
@@ -77,6 +89,7 @@ export const Login = () => {
             <form onSubmit={handleSubmit}>
               <div className="mb-4 text-lg">
                 <input
+                  autoFocus
                   className="rounded-sm border-none bg-opacity-50 py-2 sm:px-6 sm:py-2 text-center text-inherit text-gray-900 placeholder-slate-500 shadow-lg outline-none backdrop-blur-md"
                   type="text"
                   name="documento"

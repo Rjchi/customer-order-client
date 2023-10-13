@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
 import { Spinner } from "../components/utils/Spinner";
-import { useOrders } from "../context/PedidoCotext";
 import { MenuProductsByCategory } from "../components/Menu/MenuProductsByCategory";
 
 export const Menu = () => {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
   const context = useOrders();
 
   useEffect(() => {
@@ -19,16 +21,7 @@ export const Menu = () => {
     };
 
     loadProducts();
-
-    if (context.token) {
-      /**-------------------------------------------------
-       * Aqui tocaria validar con el middleware de auth
-       * -------------------------------------------------*/
-      console.log(context.token);
-    } else {
-      console.log("Cliente normal");
-    }
-  }, [context]);
+  }, [context, navigate]);
 
   if (products.length === 0) {
     return <Spinner />;
