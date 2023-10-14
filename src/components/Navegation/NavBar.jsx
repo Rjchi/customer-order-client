@@ -110,7 +110,15 @@ const NavBar = () => {
                 ) : (
                   <button
                     type="button"
-                    onClick={() => navigate(`/login`)}
+                    onClick={() => {
+                      if (
+                        locate &&
+                        locate.pathname &&
+                        locate.pathname !== "/login"
+                      ) {
+                        navigate(`/login`);
+                      }
+                    }}
                     className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
                   >
                     Iniciar Sesión
