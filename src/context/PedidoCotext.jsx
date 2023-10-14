@@ -15,6 +15,22 @@ export const PedidoContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const locate = useLocation();
 
+  /**------------------------------------------------------
+   * | Esto es para redireccionar en caso de que el token
+   * | No sea proporcionado o ya sea invalido
+   * ------------------------------------------------------*/
+  const redirectForActions = (error) => {
+    if (error) {
+      if (
+        (error.response.status && error.response.status === 403) ||
+        error.response.status === 401
+      ) {
+        sessionStorage.clear();
+        navigate(`/login`);
+      }
+    }
+  };
+
   const getProByCate = (products) => {
     const productsByCategory = products.reduce((acc, product) => {
       const { id_categoria, nombre_categoria } = product;
@@ -110,7 +126,7 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await pedidos.deleteOrderRequest(id);
       return response.status;
     } catch (error) {
-      console.log(`Error al eliminar pedido detalles: ${error.message}`);
+      redirectForActions(error);
     }
   };
 
