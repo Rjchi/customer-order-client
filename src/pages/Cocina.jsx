@@ -37,7 +37,7 @@ const Cocina = () => {
     const loadOrders = async () => {
       await fetchRole();
       const response = await context.getOrdersNotCheck();
-      if (response.length !== 0) {
+      if (response && response.length !== 0) {
         setPedidos(response);
       }
     };

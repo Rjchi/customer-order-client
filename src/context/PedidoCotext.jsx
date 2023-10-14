@@ -20,7 +20,7 @@ export const PedidoContextProvider = ({ children }) => {
    * | No sea proporcionado o ya sea invalido
    * ------------------------------------------------------*/
   const redirectForActions = (error) => {
-    console.log(error.response.status)
+    console.log(error.response.status);
     if (error && error.response.status) {
       if (error.response.status === 403 || error.response.status === 401) {
         sessionStorage.clear();
@@ -88,7 +88,7 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await pedidos.getOrdersRequest();
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      redirectForActions(error);
     }
   };
 
@@ -97,7 +97,7 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await pedidos.getOrdersNotCheckRequest();
       return response.data;
     } catch (error) {
-      console.log(error.message);
+      redirectForActions(error);
     }
   };
 
@@ -133,9 +133,7 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await pedidos.deleteOrderByTableRequest(table);
       return response.status;
     } catch (error) {
-      console.log(
-        `Error al eliminar pedidos de una mesa detalles: ${error.message}`
-      );
+      redirectForActions(error);
     }
   };
 
