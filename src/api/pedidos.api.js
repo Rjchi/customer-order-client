@@ -17,7 +17,11 @@ const deleteOrdersRequest = async () =>
   await axios.delete(`${API}/api/delete-orders`);
 
 const deleteOrderRequest = async (id) =>
-  await axios.delete(`${API}/api/delete-order/${id}`);
+  await axios.delete(`${API}/api/delete-order/${id}`, {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("currentToken")}`,
+    },
+  });
 
 const updateCheckRequest = async (id) =>
   await axios.put(`${API}/api/update-check/${id}`);
