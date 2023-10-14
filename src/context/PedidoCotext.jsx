@@ -20,11 +20,9 @@ export const PedidoContextProvider = ({ children }) => {
    * | No sea proporcionado o ya sea invalido
    * ------------------------------------------------------*/
   const redirectForActions = (error) => {
-    if (error) {
-      if (
-        (error.response.status && error.response.status === 403) ||
-        error.response.status === 401
-      ) {
+    console.log(error.response.status)
+    if (error && error.response.status) {
+      if (error.response.status === 403 || error.response.status === 401) {
         sessionStorage.clear();
         navigate(`/login`);
       }
@@ -81,7 +79,7 @@ export const PedidoContextProvider = ({ children }) => {
       const response = await pedidos.updateCheckRequest(id);
       return response.status;
     } catch (error) {
-      console.log(error);
+      redirectForActions(error);
     }
   };
 
