@@ -1,7 +1,26 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import hooks from "../../hooks/useFunctions";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const locate = useLocation();
+
+  let user = null;
+
+  const token = sessionStorage.getItem("currentToken");
+
+  if (token) {
+    const decodedToken = hooks.useDecodedToken(token);
+    user = decodedToken.user;
+  }
+
+  const handleClick = () => {
+    sessionStorage.clear();
+    if (locate && locate.pathname && locate !== "/menu") {
+      navigate(`/menu`);
+    }
+  };
 
   return (
     // <div className="w-full fixed top-0 left-0 z-30 lg:grid lg:grid-cols-10 ">
@@ -33,13 +52,43 @@ const NavBar = () => {
               <nav>
                 <ul className="flex items-center justify-between space-x-3 text-base text-blue-600 pt-4 md:pt-0">
                   <li className="hover:text-gray-50">
-                    <Link to={`/cocina`}>Cocina</Link>
+                    {user && user !== null && user.usu_rol === "Cocinero" ? (
+                      <>
+                        {locate &&
+                        locate.pathname &&
+                        locate.pathname !== "/cocina" ? (
+                          <Link to={`/cocina`}>Cocina</Link>
+                        ) : (
+                          <div className="cursor-pointer">Cocina</div>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </li>
                   <li className="hover:text-gray-50">
-                    <Link to={`/menu`}>Cliente</Link>
+                    {locate &&
+                    locate.pathname &&
+                    locate.pathname !== "/menu" ? (
+                      <Link to={`/menu`}>Cliente</Link>
+                    ) : (
+                      <div className="cursor-pointer">Cliente</div>
+                    )}
                   </li>
                   <li className="hover:text-gray-50">
-                    <Link to={`/caja`}>Caja</Link>
+                    {user && user !== null && user.usu_rol === "Cajero" ? (
+                      <>
+                        {locate &&
+                        locate.pathname &&
+                        locate.pathname !== "/caja" ? (
+                          <Link to={`/caja`}>Caja</Link>
+                        ) : (
+                          <div className="cursor-pointer">Caja</div>
+                        )}
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </li>
                 </ul>
               </nav>
@@ -50,13 +99,23 @@ const NavBar = () => {
               id="nav-content"
             >
               <div className="auth flex items-center w-full md:w-full">
-                <button
-                  type="button"
-                  onClick={() => navigate(`/login`)}
-                  className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
-                >
-                  Iniciar sesion
-                </button>
+                {user && user !== null && user !== undefined ? (
+                  <button
+                    type="button"
+                    onClick={() => handleClick()}
+                    className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
+                  >
+                    Cerrar Sesión
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/login`)}
+                    className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"
+                  >
+                    Iniciar Sesión
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -19,17 +19,15 @@ export const Caja = () => {
      * ----------------------------------------------*/
     const fetchRole = async () => {
       if (sessionStorage.getItem("currentToken")) {
-        const res = await context.validateToken(
-          sessionStorage.getItem("currentToken")
-        );
-        if (res) {
-          /**----------------------------------------------
-           * | Si el token existe y es valido
-           * | Redireccionamos al usuario segun su rol
-           *  ----------------------------------------------*/
-          context.redirectUser();
-          console.log("ENTRO A VALIDAR EL ROL EN CAJA");
-        }
+        await context.validateToken(sessionStorage.getItem("currentToken"));
+        /**----------------------------------------------
+         * | Si el token existe y es valido
+         * | Redireccionamos al usuario segun su rol
+         *  ----------------------------------------------*/
+        await context.redirectUser();
+        console.log("ENTRO A VALIDAR EL ROL EN CAJA");
+      } else {
+        await context.redirectUser();
       }
     };
 

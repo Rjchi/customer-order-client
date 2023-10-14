@@ -17,17 +17,15 @@ const Cocina = () => {
      * ----------------------------------------------*/
     const fetchRole = async () => {
       if (sessionStorage.getItem("currentToken")) {
-        const res = await context.validateToken(
-          sessionStorage.getItem("currentToken")
-        );
-        if (res) {
-          /**----------------------------------------------
-           * | Si el token existe y es valido
-           * | Redireccionamos al usuario segun su rol
-           *  ----------------------------------------------*/
-          context.redirectUser();
-          console.log("ENTRO A VALIDAR EL ROL EN COCINA");
-        }
+        await context.validateToken(sessionStorage.getItem("currentToken"));
+        /**----------------------------------------------
+         * | Si el token existe y es valido
+         * | Redireccionamos al usuario segun su rol
+         *  ----------------------------------------------*/
+        await context.redirectUser();
+        console.log("ENTRO A VALIDAR EL ROL EN COCINA");
+      } else {
+        await context.redirectUser();
       }
     };
 
@@ -44,7 +42,7 @@ const Cocina = () => {
       }
     };
 
-    if (pedidos.length === 0) {
+    if (pedidos && pedidos.length === 0) {
       loadOrders();
     }
 
@@ -57,7 +55,7 @@ const Cocina = () => {
 
     context.socket.on("recargaPedidos", () => {
       setPedidos([]);
-      if (pedidos.length === 0) {
+      if (pedidos && pedidos.length === 0) {
         loadOrders();
       }
     });
@@ -75,7 +73,7 @@ const Cocina = () => {
     return (
       <>
         <NavBar />
-        <Spinner />;
+        <Spinner />
       </>
     );
   } else {

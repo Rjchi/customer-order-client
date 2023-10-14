@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { useOrders } from "../context/PedidoCotext";
@@ -6,7 +5,6 @@ import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
   const context = useOrders();
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
@@ -14,25 +12,17 @@ export const Login = () => {
   useEffect(() => {
     const fetchRole = async () => {
       if (sessionStorage.getItem("currentToken")) {
-        try {
-          const res = await context.validateToken(
-            sessionStorage.getItem("currentToken")
-          );
-          if (res) {
-            /**----------------------------------------------
-             * | Si el token existe y es valido
-             * | Redireccionamos al usuario segun su rol
-             *  ----------------------------------------------*/
-            context.redirectUser();
-          }
-        } catch (error) {
-          console.error(error);
-        }
+        await context.validateToken(sessionStorage.getItem("currentToken"));
+        /**----------------------------------------------
+         * | Si el token existe y es valido
+         * | Redireccionamos al usuario segun su rol
+         *  ----------------------------------------------*/
+        await context.redirectUser();
       }
     };
 
     fetchRole();
-  }, [context, navigate]);
+  }, [context]);
 
   // Manejar cambios en los inputs
   const handleDocumentoChange = (e) => {

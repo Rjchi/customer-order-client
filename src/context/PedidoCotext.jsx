@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createContext, useContext } from "react";
 
 import pedidos from "../api/pedidos.api";
@@ -13,6 +13,7 @@ export const PedidoContextProvider = ({ children }) => {
   const API = import.meta.env.VITE_API_URL;
   const socket = io(`${API}`);
   const navigate = useNavigate();
+  const locate = useLocation();
 
   const getProByCate = (products) => {
     const productsByCategory = products.reduce((acc, product) => {
@@ -158,14 +159,11 @@ export const PedidoContextProvider = ({ children }) => {
       if (response && response.data.token) {
         sessionStorage.clear();
         sessionStorage.setItem("currentToken", response.data.token);
-        return true;
       } else {
         sessionStorage.clear();
-        return false;
       }
     } catch (error) {
       sessionStorage.clear();
-      return false;
     }
   };
 
@@ -176,19 +174,31 @@ export const PedidoContextProvider = ({ children }) => {
 
       if (token && decodedToken) {
         if (decodedToken.user.usu_rol === "Mesero") {
-          navigate(`/menu`);
+          if (locate && locate.pathname && locate.pathname !== "/menu") {
+            navigate(`/menu`);
+          }
         } else if (decodedToken.user.usu_rol === "Cocinero") {
-          navigate(`/cocina`);
+          if (locate && locate.pathname && locate.pathname !== "/cocina") {
+            navigate(`/cocina`);
+          }
         } else if (decodedToken.user.usu_rol === "Cajero") {
-          navigate(`/caja`);
+          if (locate && locate.pathname && locate.pathname !== "/caja") {
+            navigate(`/caja`);
+          }
         } else {
-          navigate(`/menu`);
+          if (locate && locate.pathname && locate.pathname !== "/menu") {
+            navigate(`/menu`);
+          }
         }
       } else {
-        navigate(`/menu`);
+        if (locate && locate.pathname && locate.pathname !== "/menu") {
+          navigate(`/menu`);
+        }
       }
     } catch (error) {
-      navigate(`/menu`);
+      if (locate && locate.pathname && locate.pathname !== "/menu") {
+        navigate(`/menu`);
+      }
     }
   };
 
