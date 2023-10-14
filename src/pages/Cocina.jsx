@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
@@ -8,7 +7,6 @@ import { CocinaTable } from "../components/Cocina/CocinaTable";
 
 const Cocina = () => {
   const [pedidos, setPedidos] = useState([]);
-  const navigate = useNavigate();
   const context = useOrders();
 
   useEffect(() => {
@@ -19,32 +17,27 @@ const Cocina = () => {
      * ----------------------------------------------*/
     const fetchRole = async () => {
       if (sessionStorage.getItem("currentToken")) {
-        try {
-          const res = await context.validateToken(
-            sessionStorage.getItem("currentToken")
-          );
-          if (res) {
-            /**----------------------------------------------
-             * | Si el token existe y es valido
-             * | Redireccionamos al usuario segun su rol
-             *  ----------------------------------------------*/
-            context.redirectUser();
-          } else {
-            navigate(`/menu`);
-          }
-        } catch (error) {
-          navigate(`/menu`);
+        const res = await context.validateToken(
+          sessionStorage.getItem("currentToken")
+        );
+        if (res) {
+          /**----------------------------------------------
+           * | Si el token existe y es valido
+           * | Redireccionamos al usuario segun su rol
+           *  ----------------------------------------------*/
+          context.redirectUser();
+          console.log("ENTRO A VALIDAR EL ROL EN COCINA");
         }
-      } else {
-        navigate(`/menu`);
       }
     };
 
-    fetchRole();
-
+    /**-----------------------------
+     * | Conexión con la cocina
+     * -----------------------------*/
     context.socket.emit("cocinaConectada");
 
     const loadOrders = async () => {
+      await fetchRole();
       const response = await context.getOrdersNotCheck();
       if (response.length !== 0) {
         setPedidos(response);
@@ -76,9 +69,9 @@ const Cocina = () => {
       context.socket.off("nuevoPedidoCocina");
       context.socket.off("recargaPedidos");
     };
-  }, [pedidos, context, navigate]);
+  }, [context, pedidos]);
 
-  if (pedidos.length === 0) {
+  if (pedidos && pedidos.length === 0) {
     return (
       <>
         <NavBar />
@@ -86,7 +79,7 @@ const Cocina = () => {
       </>
     );
   } else {
-    const ordersByTable = Object.values(getOrderByTable(pedidos));
+    const ordersByTable = Object.values(context.getOrderByTable(pedidos));
     console.log(ordersByTable);
 
     return (

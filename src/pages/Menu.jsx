@@ -13,6 +13,7 @@ export const Menu = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
     const loadProducts = async () => {
       const response = await context.getProducts();
       if (response !== undefined) {

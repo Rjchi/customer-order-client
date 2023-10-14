@@ -180,7 +180,7 @@ export const PedidoContextProvider = ({ children }) => {
         } else if (decodedToken.user.usu_rol === "Cocinero") {
           navigate(`/cocina`);
         } else if (decodedToken.user.usu_rol === "Cajero") {
-          navigate(`/cajero`);
+          navigate(`/caja`);
         } else {
           navigate(`/menu`);
         }

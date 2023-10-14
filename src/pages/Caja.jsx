@@ -19,28 +19,19 @@ export const Caja = () => {
      * ----------------------------------------------*/
     const fetchRole = async () => {
       if (sessionStorage.getItem("currentToken")) {
-        try {
-          const res = await context.validateToken(
-            sessionStorage.getItem("currentToken")
-          );
-          if (res) {
-            /**----------------------------------------------
-             * | Si el token existe y es valido
-             * | Redireccionamos al usuario segun su rol
-             *  ----------------------------------------------*/
-            context.redirectUser();
-          } else {
-            navigate(`/menu`);
-          }
-        } catch (error) {
-          navigate(`/menu`);
+        const res = await context.validateToken(
+          sessionStorage.getItem("currentToken")
+        );
+        if (res) {
+          /**----------------------------------------------
+           * | Si el token existe y es valido
+           * | Redireccionamos al usuario segun su rol
+           *  ----------------------------------------------*/
+          context.redirectUser();
+          console.log("ENTRO A VALIDAR EL ROL EN CAJA");
         }
-      } else {
-        navigate(`/menu`);
       }
     };
-
-    fetchRole();
 
     /**-----------------------------
      * | Conexión con los pedidos
@@ -48,6 +39,7 @@ export const Caja = () => {
     context.socket.emit("cajaConectada");
 
     const loadOrders = async () => {
+      await fetchRole();
       const response = await context.getOrders();
       if (response && response.length !== 0) {
         setPedidos(response);
