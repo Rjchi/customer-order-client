@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
@@ -8,7 +7,6 @@ import { MenuProductsByCategory } from "../components/Menu/MenuProductsByCategor
 
 export const Menu = () => {
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
   const context = useOrders();
 
   useEffect(() => {
@@ -16,15 +14,15 @@ export const Menu = () => {
 
     const loadProducts = async () => {
       const response = await context.getProducts();
-      if (response !== undefined) {
+      if (response && response !== undefined) {
         setProducts(response);
       }
     };
 
     loadProducts();
-  }, [context, navigate]);
+  }, [context]);
 
-  if (products.length === 0) {
+  if (products && products.length === 0) {
     return <Spinner />;
   } else {
     const productsByCategory = Object.values(context.getProByCate(products));

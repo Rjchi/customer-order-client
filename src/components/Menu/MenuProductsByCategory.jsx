@@ -1,29 +1,67 @@
 import { Spinner } from "../utils/Spinner";
 import { GiChipsBag } from "react-icons/gi";
 import { PiBowlFoodFill } from "react-icons/pi";
-import { MenuProductCard } from "./MenuProductCard";
 import { BsFillCupHotFill } from "react-icons/bs";
+import { MenuProductCard } from "./MenuProductCard";
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useOrders } from "../../context/PedidoCotext";
 import { MdLocalDrink, MdFastfood } from "react-icons/md";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
+import { useNavigate } from "react-router-dom";
 
 export const MenuProductsByCategory = ({ category, products }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const context = useOrders();
 
-  if (products.length === 0 || category === undefined || category === null) {
+  useEffect(() => {
+    const fetchRole = async () => {
+      if (sessionStorage.getItem("currentToken")) {
+        await context.validateToken(sessionStorage.getItem("currentToken"));
+        /**---------------------------------------------------------------
+         * | En caso de que haya habido token pero en la validación
+         * | Anterior se haya vuelto null entonces lo mandamos al
+         * | Logueo
+         * ---------------------------------------------------------------*/
+        if (!sessionStorage.getItem("currentToken")){
+          navigate('/login');
+        }
+      } else {
+        console.log("No hay token");
+      }
+    };
+
+    if (menuOpen) {
+      fetchRole();
+    }
+  }, [context, menuOpen, navigate]);
+
+  if (
+    !products ||
+    products.length === 0 ||
+    category === undefined ||
+    category === null
+  ) {
     return <Spinner />;
   } else {
     let contador = 0;
-    function colorIntercalado() {
+
+    const colorIntercalado = () => {
       if (contador === 4) {
         contador = 0;
       }
-      const colores = ["bg-green-500 hover:bg-green-600", "bg-blue-500 hover:bg-blue-800", "bg-pink-500 hover:bg-pink-800", "bg-yellow-400 hover:bg-yellow-600"];
+      const colores = [
+        "bg-green-500 hover:bg-green-600",
+        "bg-blue-500 hover:bg-blue-800",
+        "bg-pink-500 hover:bg-pink-800",
+        "bg-yellow-400 hover:bg-yellow-600",
+      ];
       const colorIntercalado = colores[contador];
       contador++;
       return colorIntercalado;
-    }
+    };
+
     return (
       <div
         className={`flex flex-col justify-items-center items-center h-full w-full`}
