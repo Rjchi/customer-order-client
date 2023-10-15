@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Spinner } from "../utils/Spinner";
 import { GiChipsBag } from "react-icons/gi";
 import { PiBowlFoodFill } from "react-icons/pi";
@@ -8,7 +10,6 @@ import { Fragment, useEffect, useState } from "react";
 import { useOrders } from "../../context/PedidoCotext";
 import { MdLocalDrink, MdFastfood } from "react-icons/md";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
 
 export const MenuProductsByCategory = ({ category, products }) => {
   const [menuOpen, setMenuOpen] = useState(false);

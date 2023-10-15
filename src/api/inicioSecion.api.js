@@ -8,6 +8,4 @@ const logueoRequest = async (user) =>
 const registroRequest = async (user) =>
   await axios.post(`${API}/api/registro`, user);
 
-const logout = async () => await axios.post(`${API}/api/logout`);
-
-export default { logueoRequest, registroRequest, logout };
+export default { logueoRequest, registroRequest };

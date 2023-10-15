@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 
+import { IoIosEye } from "react-icons/io";
+import { IoIosEyeOff } from "react-icons/io";
+
 import { useOrders } from "../context/PedidoCotext";
 import NavBar from "../components/Navegation/NavBar";
 
 export const Login = () => {
   const context = useOrders();
+  const [errors, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [documento, setDocumento] = useState("");
   const [contrasenia, setContrasenia] = useState("");
+  const [seePassword, setSeePassword] = useState(false);
 
   useEffect(() => {
     const fetchRole = async () => {
@@ -33,6 +38,13 @@ export const Login = () => {
     setContrasenia(e.target.value);
   };
 
+  const getErrors = () => {
+    setErrors(true);
+    setTimeout(() => {
+      setErrors(false);
+    }, 2000);
+  };
+
   // Manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,12 +65,14 @@ export const Login = () => {
 
       if (response) {
         context.redirectUser();
+      } else {
+        getErrors();
       }
     } else {
       /**----------------------------------------------
        * | Esta vacio mostrar error en los inputs
        *----------------------------------------------*/
-      console.log(JSON.stringify(datosObj));
+      getErrors();
     }
 
     setLoading(false);
@@ -85,10 +99,15 @@ export const Login = () => {
               <div className="mb-4 text-lg">
                 <input
                   autoFocus
-                  className="rounded-sm border-none bg-opacity-50 py-2 sm:px-6 sm:py-2 text-center text-inherit text-gray-900 placeholder-slate-500 shadow-lg outline-none backdrop-blur-md"
-                  type="text"
+                  className={`${
+                    errors
+                      ? "transition ease-linear border border-red-600 bg-red-300 "
+                      : "border border-transparent"
+                  }rounded-sm appearance-none text-lg py-2 px-7 sm:py-2 text-center text-gray-900 placeholder-slate-500 shadow-lg outline-none`}
+                  type="number"
                   name="documento"
                   placeholder="Documento"
+                  id="documento"
                   value={documento}
                   onChange={handleDocumentoChange}
                 />
@@ -96,15 +115,30 @@ export const Login = () => {
 
               <div className="mb-4 text-lg">
                 <input
-                  className="rounded-sm border-none bg-opacity-50 py-2 sm:px-6 sm:py-2 text-center text-inherit text-gray-900 placeholder-slate-500 shadow-lg outline-none backdrop-blur-md"
-                  type="password"
+                  className={`${
+                    errors
+                      ? "transition ease-linear border border-red-600 bg-red-300 "
+                      : "border border-transparent"
+                  }rounded-sm py-2 pl-10 pr-4 text-center text-lg text-gray-900 placeholder-slate-500 shadow-lg outline-none absolute`}
+                  type={`${seePassword ? "text" : "password"}`}
                   name="contrasenia"
                   placeholder="*********"
                   value={contrasenia}
                   onChange={handleContraseniaChange}
                 />
+                {seePassword ? (
+                  <IoIosEye
+                    onClick={() => setSeePassword(false)}
+                    className="cursor-pointer relative eye-pos m-2 bg-transparent text-2xl"
+                  />
+                ) : (
+                  <IoIosEyeOff
+                    onClick={() => setSeePassword(true)}
+                    className="cursor-pointer relative eye-pos m-2 bg-transparent text-2xl"
+                  />
+                )}
               </div>
-              <div className="mt-8 flex justify-center text-lg text-black">
+              <div className="mt-11 flex justify-center text-lg text-black">
                 <button
                   type={`${!loading ? "submit" : "button"}`}
                   className="p-2 sm:p-3 rounded-sm border border-solid border-black text-slate-100 text-base shadow-sm shadow-black bg-blue-500 font-mono font-bold hover:bg-blue-800 hover:text-white ease-out duration-1000"

@@ -17,3 +17,8 @@ body {
   width: 700px !important;
   height: 200px !important;
 }
+
+.eye-pos {
+  /* left: 227px; */
+  top: 10px
+}

@@ -37,15 +37,14 @@
   -o-border-radius: 30px;
 }
 
-#mesa::-webkit-inner-spin-button,
-#mesa::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  appearance: none;
-  margin: 0;
-}
+/* Eliminamos las flechas en los inputs de tipo 'number' */
 
+#mesa::-webkit-inner-spin-button,
+#mesa::-webkit-outer-spin-button,
 #cantidad::-webkit-inner-spin-button,
-#cantidad::-webkit-outer-spin-button {
+#cantidad::-webkit-outer-spin-button,
+#documento::-webkit-inner-spin-button,
+#documento::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
   margin: 0;
