@@ -9,6 +9,6 @@ Currently, two official plugins are available:
 
 # Al ejecutar
 Utilizamos la ip de la maquina local desde el archivo env:
-<strong>npx vite --host 192....</strong>
+<strong>npx vite --host 192.168....</strong>
 
 
