@@ -12,3 +12,4 @@ Utilizamos la ip de la maquina local desde el archivo env:
 <strong>npx vite --host 192.168....</strong>
 
 
+...
