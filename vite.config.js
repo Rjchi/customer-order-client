@@ -10,7 +10,8 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     },
-    host: '192.168.100.80',
+    // host: '192.168.100.80',
+    host: 'localhost',
     port: 4173
   },
   build: {
